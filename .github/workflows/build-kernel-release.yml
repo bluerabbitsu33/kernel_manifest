@@ -94,6 +94,7 @@ jobs:
             manifest: oneplus_13t.xml
             android_version: android15
             kernel_version: "6.6"
+            ksun_branch: ${{ inputs.ksun_branch }}
          # - model: OPAce5Pro
          #   soc: sun
          #   branch: oneplus/sm8750
