@@ -12,6 +12,17 @@ on:
         required: true
         type: boolean
         default: false
+      ksun_branch:
+        description: "Choose KernelSU Next Branch"
+        required: true
+        type: choice
+        options:
+          - stable
+          - next
+          - next-susfs
+          - next-susfs-dev
+        default: next-susfs-dev
+
 
 jobs:
   #build-batch-1: # Non Bazel Builds
