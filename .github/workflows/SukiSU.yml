@@ -58,6 +58,15 @@ on:
           - enable
           - disable
         default: enable
+      LTO:
+        description: "Type of LTO optimisation to use"
+        required: true
+        type: choice
+        options:
+          - full
+          - thin
+          - none
+        default: thin # useless right now, forced to thin always
 
 jobs:
   build:
@@ -218,9 +227,10 @@ jobs:
           rm $PLATFORM/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
           rm $PLATFORM/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
 
-          #sed -i 's/CONFIG_LTO=n/CONFIG_LTO=y/' "$PLATFORM/common/arch/arm64/configs/gki_defconfig"
-          #sed -i 's/CONFIG_LTO_CLANG_FULL=y/CONFIG_LTO_CLANG_THIN=y/' "$PLATFORM/common/arch/arm64/configs/gki_defconfig"
-          #sed -i 's/CONFIG_LTO_CLANG_NONE=y/CONFIG_LTO_CLANG_THIN=y/' "$PLATFORM/common/arch/arm64/configs/gki_defconfig"
+          # Set LTO
+          sed -i 's/CONFIG_LTO=n/CONFIG_LTO=y/' "$PLATFORM/common/arch/arm64/configs/gki_defconfig"
+          sed -i 's/CONFIG_LTO_CLANG_FULL=y/CONFIG_LTO_CLANG_THIN=y/' "$PLATFORM/common/arch/arm64/configs/gki_defconfig"
+          sed -i 's/CONFIG_LTO_CLANG_NONE=y/CONFIG_LTO_CLANG_THIN=y/' "$PLATFORM/common/arch/arm64/configs/gki_defconfig"
 
           
           # Adjust localversion strings
@@ -228,8 +238,10 @@ jobs:
           sed -i 's/ -dirty//g' "$PLATFORM/common/scripts/setlocalversion"
           sed -i 's/ -dirty//g' "$PLATFORM/msm-kernel/scripts/setlocalversion"
           sed -i 's/ -dirty//g' "$PLATFORM/external/dtc/scripts/setlocalversion"
-          
-          #sed -i '/echo "LTO $LTO "/i export LTO=thin' $PLATFORM/oplus/build/oplus_setup.sh
+
+          # Set LTO
+          sed -i '/echo "LTO $LTO "/i export LTO=thin' "$PLATFORM/oplus/build/oplus_setup.sh"
+          sed -i 's/export REPACK_IMG=true/export REPACK_IMG=false/g' "$PLATFORM/oplus/build/oplus_setup.sh"
           
           sed -i "/stable_scmversion_cmd/s/-maybe-dirty//g" "$PLATFORM/build/kernel/kleaf/impl/stamp.bzl"
           sed -i '/KMI_GENERATION/s/-$oki_infix//g' "$PLATFORM/build/kernel/kleaf/impl/stamp.bzl"
@@ -237,8 +249,8 @@ jobs:
 
           # Replace kernel name strings
           #echo "正在设置内核名称..."
-          #sed -i '$s|echo "\$res"|echo "\${{ inputs.KERNEL_NAME }}"|' "$COMMON/scripts/setlocalversion"
-          #echo "内核名称设置完成"
+          sed -i '$s|echo "\$res"|echo "\${{ inputs.KERNEL_NAME }}"|' "$COMMON/scripts/setlocalversion"
+          echo "内核名称设置完成"
 
           # Set KSU config to gki_defconfig
           echo "正在更新KernelSU 内核配置..."
