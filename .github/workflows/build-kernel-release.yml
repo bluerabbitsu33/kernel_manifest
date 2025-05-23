@@ -21,6 +21,7 @@ on:
           - next
           - next-susfs
           - next-susfs-dev
+          - SukiSU_dev
         default: next-susfs-dev
 
 
