@@ -218,9 +218,9 @@ jobs:
           rm $PLATFORM/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
           rm $PLATFORM/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
 
-          sed -i 's/CONFIG_LTO=n/CONFIG_LTO=y/' "$PLATFORM/common/arch/arm64/configs/gki_defconfig"
-          sed -i 's/CONFIG_LTO_CLANG_FULL=y/CONFIG_LTO_CLANG_THIN=y/' "$PLATFORM/common/arch/arm64/configs/gki_defconfig"
-          sed -i 's/CONFIG_LTO_CLANG_NONE=y/CONFIG_LTO_CLANG_THIN=y/' "$PLATFORM/common/arch/arm64/configs/gki_defconfig"
+          #sed -i 's/CONFIG_LTO=n/CONFIG_LTO=y/' "$PLATFORM/common/arch/arm64/configs/gki_defconfig"
+          #sed -i 's/CONFIG_LTO_CLANG_FULL=y/CONFIG_LTO_CLANG_THIN=y/' "$PLATFORM/common/arch/arm64/configs/gki_defconfig"
+          #sed -i 's/CONFIG_LTO_CLANG_NONE=y/CONFIG_LTO_CLANG_THIN=y/' "$PLATFORM/common/arch/arm64/configs/gki_defconfig"
 
           
           # Adjust localversion strings
@@ -229,7 +229,7 @@ jobs:
           sed -i 's/ -dirty//g' "$PLATFORM/msm-kernel/scripts/setlocalversion"
           sed -i 's/ -dirty//g' "$PLATFORM/external/dtc/scripts/setlocalversion"
           
-          sed -i '/echo "LTO $LTO "/i export LTO=thin' $PLATFORM/oplus/build/oplus_setup.sh
+          #sed -i '/echo "LTO $LTO "/i export LTO=thin' $PLATFORM/oplus/build/oplus_setup.sh
           
           sed -i "/stable_scmversion_cmd/s/-maybe-dirty//g" "$PLATFORM/build/kernel/kleaf/impl/stamp.bzl"
           sed -i '/KMI_GENERATION/s/-$oki_infix//g' "$PLATFORM/build/kernel/kleaf/impl/stamp.bzl"
