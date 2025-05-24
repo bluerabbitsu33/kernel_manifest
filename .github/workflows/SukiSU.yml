@@ -150,7 +150,7 @@ jobs:
           mkdir "$WORKSPACE" && cd "$WORKSPACE"
           repo init -u https://github.com/epicmann24/kernel_manifest.git -b refs/heads/oneplus/${{ inputs.SoC }} -m ${{ inputs.FILE }}.xml --depth=1 || { echo "repo init 失败"; exit 1; }
           repo sync -c -j$(nproc --all) --no-tags || { echo "repo sync 失败"; exit 1; }
-          git clone https://gitlab.com/kei-space/clang/r522817.git $PLATFORM/prebuilts/clang/host/linux-x86/clang-r522817
+          git clone https://gitlab.com/kei-space/clang/r547379.git $PLATFORM/prebuilts/clang/host/linux-x86/clang-r522817
 
       - name: Get KernelSU version # 获取 KernelSU 版本
         if: ${{ startsWith(inputs.KSU_CONFIG, 'SukiSU') }}
@@ -228,9 +228,9 @@ jobs:
           rm $PLATFORM/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
 
           # Set LTO
-          sed -i 's/CONFIG_LTO=n/CONFIG_LTO=y/' "$PLATFORM/common/arch/arm64/configs/gki_defconfig"
-          sed -i 's/CONFIG_LTO_CLANG_FULL=y/CONFIG_LTO_CLANG_THIN=y/' "$PLATFORM/common/arch/arm64/configs/gki_defconfig"
-          sed -i 's/CONFIG_LTO_CLANG_NONE=y/CONFIG_LTO_CLANG_THIN=y/' "$PLATFORM/common/arch/arm64/configs/gki_defconfig"
+          sed -i 's/CONFIG_LTO=n/CONFIG_LTO=y/' "$DEFCONFIG"
+          sed -i 's/CONFIG_LTO_CLANG_FULL=y/CONFIG_LTO_CLANG_THIN=y/' "$DEFCONFIG"
+          sed -i 's/CONFIG_LTO_CLANG_NONE=y/CONFIG_LTO_CLANG_THIN=y/' "$DEFCONFIG"
 
           
           # Adjust localversion strings
@@ -303,15 +303,25 @@ jobs:
 
       - name: Build kernel # 构建内核
         run: |
+          sudo sh -c 'sync; echo 3 > /proc/sys/vm/drop_caches'
           cd "$WORKSPACE"
 
           BUILD_TYPE="gki"
+          BAZEL_ARGS=(--jobs=$(nproc --all) --lto=thin)
           if [ "${{ inputs.Chipset }}" == "sun" ]; then
             BUILD_TYPE="perf"
+            BAZEL_ARGS+=(-g)
           fi
 
           echo "开始构建内核，构建类型：$BUILD_TYPE"
-          LTO=thin ./kernel_platform/oplus/build/oplus_build_kernel.sh ${{ inputs.Chipset }} "$BUILD_TYPE" --jobs=$(nproc --all) || { echo "内核构建失败"; exit 1; }
+          if [ -f ./kernel_platform/build_with_bazel.py ]; then
+            ./kernel_platform/oplus/bazel/oplus_modules_variant.sh ${{ inputs.Chipset }} "$BUILD_TYPE" ""
+            ./kernel_platform/build_with_bazel.py -t ${{ inputs.Chipset }} $BUILD_TYPE "${BAZEL_ARGS[@]}" -o "$(pwd)/out"
+            echo "1st build"
+          else
+            echo "2nd build"
+            LTO=thin ./kernel_platform/oplus/build/oplus_build_kernel.sh ${{ inputs.Chipset }} "$BUILD_TYPE"
+          fi
 
       - name: Make AnyKernel3 # 制作 AnyKernel3
         run: |
