@@ -365,7 +365,7 @@ jobs:
             ./kernel_platform/build_with_bazel.py -t ${{ inputs.Chipset }} $BUILD_TYPE "${BAZEL_ARGS[@]}" -o "$(pwd)/out"
             echo "1st build"
           else
-            echo "2nd build"
+            echo "2nd build" #original
             LTO=thin ./kernel_platform/oplus/build/oplus_build_kernel.sh ${{ inputs.Chipset }} "$BUILD_TYPE"
           fi
 
@@ -378,7 +378,7 @@ jobs:
           git clone https://github.com/schqiushui/AnyKernel3-KernelSU-Next.git -b gki-2.0 --depth=1 && rm -rf ./AnyKernel3-KernelSU-Next/.git
 
           # Copy kernel
-          IMAGE_PATH=$(find "$PLATFORM/out" -name "Image")
+          IMAGE_PATH=$(find "$PLATFORM/../out" -name "Image")
           if [ -n "$IMAGE_PATH" ]; then
             cp "$IMAGE_PATH" "$WORKSPACE/AnyKernel3-KernelSU-Next/Image"
             cp "$IMAGE_PATH" "$WORKSPACE/image_output/Image"
