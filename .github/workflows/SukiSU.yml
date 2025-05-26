@@ -182,6 +182,7 @@ jobs:
           repo init -u https://github.com/epicmann24/kernel_manifest.git -b refs/heads/oneplus/${{ inputs.SoC }} -m ${{ inputs.FILE }}.xml --depth=1 || { echo "repo init 失败"; exit 1; }
           repo sync -c -j$(nproc --all) --no-tags || { echo "repo sync 失败"; exit 1; }
           #git clone https://gitlab.com/kei-space/clang/r547379.git $PLATFORM/prebuilts/clang/host/linux-x86/clang-r522817
+          rm -rf clang-r522817 clang-r530567 clang-r536225
           sed -i 's/r510928/r547379/g' $PLATFORM/common/build.config.constants
           sed -i 's/r510928/r547379/g' $PLATFORM/msm-kernel/build.config.constants
 
