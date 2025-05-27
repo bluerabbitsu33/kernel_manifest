@@ -116,7 +116,37 @@ jobs:
 
       - name: Configure Git & Install dependencies # 配置 Git & 安装依赖
         run: |
+          export DEBIAN_FRONTEND=noninteractive
+          echo "DEBIAN_FRONTEND=noninteractive" >> $GITHUB_ENV
+          
+          df -h
+          
           sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /usr/local/.ghcup /opt/hostedtoolcache/CodeQL /usr/local/share/powershell /usr/share/swift || true
+          sudo docker image prune --all --force
+          echo "some directories deleted"
+          
+          # Remove large unwanted packages
+          sudo apt-get purge -y \
+            aria2 ansible azure-cli shellcheck rpm xorriso zsync \
+            esl-erlang firefox gfortran-8 gfortran-9 google-chrome-stable \
+            google-cloud-sdk imagemagick \
+            libmagickcore-dev libmagickwand-dev libmagic-dev ant ant-optional kubectl \
+            mercurial apt-transport-https mono-complete libmysqlclient \
+            unixodbc-dev yarn chrpath libssl-dev libxft-dev \
+            libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev \
+            snmp pollinate libpq-dev postgresql-client powershell ruby-full \
+            sphinxsearch subversion mongodb-org microsoft-edge-stable || true
+          
+          # Regex-based purges (for bulk families like mysql, php, dotnet)
+          sudo apt-get purge -y $(dpkg-query -W -f='${binary:Package}\n' | grep -E '^mysql|^php|^dotnet') || true
+          
+          # Clean up
+          sudo apt-get autoremove -y
+          sudo apt-get autoclean -y
+          echo "some packages purged"
+          
+          df -h
+          
           git config --global user.name "schqiushui"
           git config --global user.email "orochi9999@gmail.com"
           sudo apt update -y
