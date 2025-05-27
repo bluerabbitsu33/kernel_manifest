@@ -116,6 +116,7 @@ jobs:
 
       - name: Configure Git & Install dependencies # 配置 Git & 安装依赖
         run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /usr/local/.ghcup /opt/hostedtoolcache/CodeQL /usr/local/share/powershell /usr/share/swift || true
           git config --global user.name "schqiushui"
           git config --global user.email "orochi9999@gmail.com"
           sudo apt update -y
