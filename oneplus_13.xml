@@ -62,7 +62,7 @@
   <project remote="clo-la" name="kernel_platform/external/pigz" path="kernel_platform/external/pigz" revision="9bc9fa17d499ddde88b77820f6d063e16c0cdd42" upstream="aosp-new/main" groups="ddk"/>
   
   <!--project remote="clo-la" name="kernel_platform/external/python/absl-py" path="kernel_platform/external/python/absl-py" revision="af9da234ce5045467014f4e7b53798e8feb2339b" upstream="refs/heads/ks-kernel.lnx.4.0.r1-rel" groups="ddk-external"/-->
-  <project remote="clo-la" name="kernel_platform/external/python/absl-py" path="kernel_platform/external/python/absl-py" revision="63f98de5b158481877489ca39158ed691f7551e1" upstream="aosp-new/main" groups="ddk-external"/>
+  <project remote="clo-la" name="kernel_platform/external/python/absl-py" path="kernel_platform/external/python/absl-py" revision="63f98de5b158481877489ca39158ed691f7551e1" upstream="aosp-new/master" groups="ddk-external"/>
   
   <!--project remote="clo-la" name="kernel_platform/external/toybox" path="kernel_platform/external/toybox" revision="dd6f71c76fe1574cf358129be29afa245eff4e36" upstream="refs/heads/ks-kernel.lnx.4.0.r1-rel" groups="ddk"/-->
   <project remote="clo-la" name="kernel_platform/external/toybox" path="kernel_platform/external/toybox" revision="9f2ff117314826fd03472451ec592813ade920ee" upstream="aosp-new/main" groups="ddk"/>
