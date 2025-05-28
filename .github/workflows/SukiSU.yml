@@ -295,6 +295,9 @@ jobs:
           echo "CONFIG_KSU_SUSFS_SUS_SU=${{ inputs.VFS_PATCH == 'enable' && 'n' || 'y' }}" >> "$DEFCONFIG"
           echo "CONFIG_KSU_MANUAL_HOOK=${{ inputs.VFS_PATCH == 'enable' && 'y' || 'n' }}" >> "$DEFCONFIG"
 
+          # Wakelock Blocker
+          echo "CONFIG_BOEFFLA_WL_BLOCKER=y" >> "$DEFCONFIG"
+
           # Use SukiSU default config
           #echo "CONFIG_KSU_SUSFS=y" >> "$DEFCONFIG"
           #echo "CONFIG_KSU_SUSFS_HAS_MAGIC_MOUNT=y" >> "$DEFCONFIG"
