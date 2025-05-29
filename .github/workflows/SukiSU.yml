@@ -298,8 +298,9 @@ jobs:
           # Wakelock Blocker
           echo "CONFIG_BOEFFLA_WL_BLOCKER=y" >> "$DEFCONFIG"
 
-          #Power Efficiency
+          #Power Optimisation
           echo "CONFIG_WQ_POWER_EFFICIENT_DEFAULT=y" >> "$DEFCONFIG"
+          echo "CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=y" >> "$DEFCONFIG"
 
           # Use SukiSU default config
           #echo "CONFIG_KSU_SUSFS=y" >> "$DEFCONFIG"
