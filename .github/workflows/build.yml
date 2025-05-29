@@ -253,6 +253,9 @@ jobs:
             echo 'CONFIG_ZRAM_DEF_COMP="lz4"' >> ./common/arch/arm64/configs/gki_defconfig
           fi
           
+          # Wakelock
+          echo "CONFIG_BOEFFLA_WL_BLOCKER=y" >> ./common/arch/arm64/configs/gki_defconfig
+          
           # Add rcu config setting
           echo "CONFIG_RCU_TRACE=n" >> ./common/arch/arm64/configs/gki_defconfig
           
