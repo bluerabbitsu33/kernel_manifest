@@ -343,7 +343,8 @@ jobs:
           echo "CONFIG_RCU_TRACE=n" >> "$DEFCONFIG"
           
           echo "CONFIG_IP_NF_TARGET_ECN=y" >> "$DEFCONFIG"
-          
+
+          # Optimize networking
           cd "$COMMON/net/ipv4"
           sed -i 's/net->ipv4.sysctl_tcp_ecn = 2;/net->ipv4.sysctl_tcp_ecn = 1;/' tcp_ipv4.c
           grep "sysctl_tcp_ecn" tcp_ipv4.c
@@ -353,6 +354,13 @@ jobs:
           sed -i 's/net->ipv4.sysctl_tcp_pacing_ca_ratio = 120;/net->ipv4.sysctl_tcp_pacing_ca_ratio = 110;/' tcp_ipv4.c
           grep "sysctl_tcp_pacing" tcp_ipv4.c
           ls -t | grep -E 'tcp_|sysctl_'
+
+          # Use BFQ io
+
+          echo "CONFIG_IOSCHED_BFQ=y" >> "$DEFCONFIG"
+          echo "CONFIG_DEFAULT_BFQ=y" >> "$DEFCONFIG"
+          echo "CONFIG_DEFAULT_NOOP=n" >> "$DEFCONFIG"
+          echo "CONFIG_DEFAULT_MQ_DEADLINE=n" >>"$DEFCONFIG"
           
           git status
           cat "$DEFCONFIG"
