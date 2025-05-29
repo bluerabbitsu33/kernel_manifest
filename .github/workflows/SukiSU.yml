@@ -298,7 +298,7 @@ jobs:
           # Wakelock Blocker
           echo "CONFIG_BOEFFLA_WL_BLOCKER=y" >> "$DEFCONFIG"
 
-          #Power Optimisation
+          #Optimisation
           echo "CONFIG_WQ_POWER_EFFICIENT_DEFAULT=y" >> "$DEFCONFIG"
           echo "CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=y" >> "$DEFCONFIG"
 
@@ -329,15 +329,15 @@ jobs:
           echo "CONFIG_TCP_CONG_ADVANCED=y" >> "$DEFCONFIG"
           echo "CONFIG_TCP_CONG_BBR=y" >> "$DEFCONFIG"
           #echo "CONFIG_DEFAULT_CUBIC=n" >> "$DEFCONFIG"
-          #echo "CONFIG_DEFAULT_BBR=y" >>  "$DEFCONFIG"
           #echo "CONFIG_NET_SCH_DEFAULT=y" >> "$DEFCONFIG"
           #echo "CONFIG_DEFAULT_FQ=y" >>  "$DEFCONFIG"
           #echo 'CONFIG_DEFAULT_NET_SCH="fq"' >> "$DEFCONFIG"
           #echo "CONFIG_NET_SCH_HTB=n" >> "$DEFCONFIG"
+          #echo 'CONFIG_DEFAULT_TCP_CONG="bbr"' >> "$DEFCONFIG"
           echo "CONFIG_TCP_CONG_BIC=n" >> "$DEFCONFIG"
           echo "CONFIG_TCP_CONG_WESTWOOD=n" >> "$DEFCONFIG"
           echo "CONFIG_TCP_CONG_HTCP=n" >> "$DEFCONFIG"
-          echo 'CONFIG_DEFAULT_TCP_CONG="bbr"' >> "$DEFCONFIG"
+          echo "CONFIG_DEFAULT_BBR=y" >>  "$DEFCONFIG"
           
           # Add rcu config setting
           echo "CONFIG_RCU_TRACE=n" >> "$DEFCONFIG"
