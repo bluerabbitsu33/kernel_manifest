@@ -189,9 +189,9 @@ jobs:
           rm -rf clang-r522817 clang-r530567 clang-r536225 clang-r547379
           #mv clang-r563880 clang-r510928
           
-          sed -i 's/r510928/r563880/g' $PLATFORM/common/build.config.constants
-          sed -i 's/r510928/r563880/g' $PLATFORM/msm-kernel/build.config.constants
-          sed -i 's/r510928/r563880/g' $PLATFORM/.source_date_epoch_dir/build.config.constants
+          sed -i 's/r510928/r547379/g' $PLATFORM/common/build.config.constants
+          sed -i 's/r510928/r547379/g' $PLATFORM/msm-kernel/build.config.constants
+          sed -i 's/r510928/r547379/g' $PLATFORM/.source_date_epoch_dir/build.config.constants
           #sed -i '/VERSIONS = \[/,/\]/c\VERSIONS = [\n    # keep sorted\n    "r547379",\n]' $PLATFORM/prebuilts/clang/host/linux-x86/kleaf/versions.bzl
 
       - name: Get KernelSU version # 获取 KernelSU 版本
