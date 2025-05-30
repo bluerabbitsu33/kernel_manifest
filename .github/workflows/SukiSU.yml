@@ -185,8 +185,8 @@ jobs:
           rm -rf $PLATFORM/prebuilts/clang/host/linux-x86/clang-r510928
           git clone https://gitlab.com/kei-space/clang/r547379.git $PLATFORM/prebuilts/clang/host/linux-x86/clang-r547379
           
-          cd $PLATFORM/prebuilts/clang/host/linux-x86
-          rm -rf clang-r522817 clang-r530567 clang-r536225 clang-r547379
+          #cd $PLATFORM/prebuilts/clang/host/linux-x86
+          #rm -rf clang-r522817 clang-r530567 clang-r536225
           #mv clang-r563880 clang-r510928
           
           sed -i 's/r510928/r547379/g' $PLATFORM/common/build.config.constants
