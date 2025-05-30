@@ -357,11 +357,11 @@ jobs:
 
           # Use BFQ io
 
-          echo "CONFIG_IOSCHED_BFQ=y" >> "$DEFCONFIG"
-          echo "CONFIG_DEFAULT_BFQ=y" >> "$DEFCONFIG"
-          echo "CONFIG_DEFAULT_NOOP=n" >> "$DEFCONFIG"
-          echo "CONFIG_DEFAULT_MQ_DEADLINE=n" >> "$DEFCONFIG"
-          echo "CONFIG_DEFAULT_IOSCHED=\"bfq\"" >> "$DEFCONFIG"
+          #echo "CONFIG_IOSCHED_BFQ=y" >> "$DEFCONFIG"
+          #echo "CONFIG_DEFAULT_BFQ=y" >> "$DEFCONFIG"
+          #echo "CONFIG_DEFAULT_NOOP=n" >> "$DEFCONFIG"
+          #echo "CONFIG_DEFAULT_MQ_DEADLINE=n" >> "$DEFCONFIG"
+          #echo "CONFIG_DEFAULT_IOSCHED=\"bfq\"" >> "$DEFCONFIG"
           
           git status
           cat "$DEFCONFIG"
