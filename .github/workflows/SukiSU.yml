@@ -428,7 +428,7 @@ jobs:
           fi
 
           # Copy dtbo.img
-          if [[ "${{ env.KERNEL_VERSION }}" == "6.6" && "${{ inputs.FILE }}" != "oneplus_13" ]]; then
+          if true; then
             readarray -d '' DTBO_FILES < <(find device/ -type f -name '*dtbo.img' -print0)
 
             if [ ${#DTBO_FILES[@]} -gt 0 ]; then
@@ -438,6 +438,7 @@ jobs:
             else
                 echo "未找到任何 dtbo.img 文件"
             fi
+            cp $WORKSPACE/image_output/dtbo.img "$WORKSPACE/AnyKernel3-KernelSU-Next/dtbo.img"
           fi
 
           # Copy boot.img
