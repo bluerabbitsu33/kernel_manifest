@@ -428,7 +428,7 @@ jobs:
           fi
 
           # Copy dtbo.img
-          if true; then
+          if false; then
             readarray -d '' DTBO_FILES < <(find device/ -type f -name '*dtbo.img' -print0)
 
             if [ ${#DTBO_FILES[@]} -gt 0 ]; then
