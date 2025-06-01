@@ -428,7 +428,6 @@ jobs:
           chmod +x /data/adb/service.d/kernel-conf.sh
           
           cat <<'rt'>> /data/adb/service.d/kernel-conf.sh
-          
           #!/system/bin/sh
           while [ "$(getprop sys.boot_completed)" != "1" ]; do
               sleep 5
@@ -456,7 +455,7 @@ jobs:
           rt
 
           cat <<'pfsd'>> /data/adb/post-fs-data.d/kernel-conf.sh
-          
+          #!/system/bin/sh
           if ! echo $(uname -r) | grep -q "Epicmann24"; then
               rm -f /data/adb/service.d/kernel-conf.sh
               rm -f /data/adb/post-fs-data.d/kernel-conf.sh
