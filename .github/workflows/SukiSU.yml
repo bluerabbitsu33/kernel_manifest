@@ -424,6 +424,67 @@ jobs:
           # Clone AnyKernel3
           git clone https://github.com/schqiushui/AnyKernel3-KernelSU-Next.git -b gki-2.0 --depth=1 && rm -rf ./AnyKernel3-KernelSU-Next/.git
 
+          # Add runtime scripts
+          cd "$WORKSPACE/AnyKernel3-KernelSU-Next
+          
+          cat <<'ak'>> ./anykernel.sh
+          
+          rm -f /data/adb/service.d/kernel-conf.sh
+          touch /data/adb/service.d/kernel-conf.sh
+          rm -f /data/adb/post-fs-data.d/kernel-conf.sh
+          touch /data/adb/post-fs-data.d/kernel-conf.sh
+
+          chmod +x /data/adb/post-fs-data.d/kernel-conf.sh
+          chmod +x /data/adb/service.d/kernel-conf.sh
+          
+          cat <<'rt'>> /data/adb/service.d/kernel-conf.sh
+          
+          #!/system/bin/sh"
+          while [ "$(getprop sys.boot_completed)" != "1" ]; do
+              sleep 5
+          done
+          sleep 5
+          echo "off" > /proc/sys/kernel/printk_devkmsg
+          for disks in /sys/block/*/queue; do
+              echo 0 > "$disks/iostats"
+          done
+          echo "4674" >> /sys/kernel/oplus_display/max_brightness
+          echo "0" >> /sys/devices/system/cpu/pmu_lib/enable_counters
+          stop statsd
+          stop tombstoned
+          stop logd
+          stop criticallog
+          stop traced
+          stop netd
+          
+          rt
+
+          cat <<'pfsd'>> /data/adb/post-fs-data.d/kernel-conf.sh
+          
+          if ! echo $(uname -r) | grep -q "Epicmann24"; then
+              rm -f /data/adb/service.d/kernel-conf.sh
+              rm -f /data/adb/post-fs-data.d/kernel-conf.sh
+              exit 0
+          fi
+
+          resetprop persist.logd.flowctrl.on 0
+          resetprop persist.logd.flowctrl.method 0
+          resetprop ro.logd.flowctrl.on 0
+          resetprop ro.logd.flowctrl.method 0
+          resetprop debug.oplus.video.log.enable 0
+          resetprop persist.sys.log.user 0
+          resetprop persist.sys.oplus.bt.cache_hcilog_mode 0
+          resetprop persist.sys.oplus.need_log 0
+          resetprop vendor.swvdec.log.level 0
+          resetprop persist.sys.ostats_tpd.enable 0
+          resetprop persist.sys.ostats_pullerd.enable 0
+          resetprop persist.sys.ostatsd.enable 0
+          resetprop debug.sf.oplus_display_trace.enable 0
+          
+          pfsd
+          
+          ak
+          
           # Copy kernel
           IMAGE_PATH=$(find "$PLATFORM/../out" -name "Image")
           if [ -n "$IMAGE_PATH" ]; then
