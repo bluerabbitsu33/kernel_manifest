@@ -355,8 +355,8 @@ jobs:
           
           echo "CONFIG_IP_NF_TARGET_ECN=y" >> "$DEFCONFIG"
 
-          sed -i "s/CONFIG_PRINTK_TIME=y/CONFIG_PRINTK_TIME=y/" >> "$DEFCONFIG"
-          sed -i "s/CONFIG_PRINTK_CALLER=y/CONFIG_PRINTK_CALLER=n/" >> "$DEFCONFIG
+          sed -i "s/CONFIG_PRINTK_TIME=y/CONFIG_PRINTK_TIME=n/" >> "$DEFCONFIG"
+          sed -i "s/CONFIG_PRINTK_CALLER=y/CONFIG_PRINTK_CALLER=n/" >> "$DEFCONFIG"
 
           # Optimize networking
           cd "$COMMON/net/ipv4"
