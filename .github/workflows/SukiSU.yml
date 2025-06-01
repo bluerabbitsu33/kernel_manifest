@@ -361,21 +361,9 @@ jobs:
           # Optimize networking
           cd "$COMMON/net/ipv4"
           sed -i 's/net->ipv4.sysctl_tcp_ecn = 2;/net->ipv4.sysctl_tcp_ecn = 1;/' tcp_ipv4.c
-          grep "sysctl_tcp_ecn" tcp_ipv4.c
           #sed -i '/\.procname[[:space:]]*=[[:space:]]*"tcp_ecn"/, /^[[:space:]]*\}/ s/SYSCTL_TWO/SYSCTL_ONE/' sysctl_net_ipv4.c
-          grep -A6 '\.procname.*tcp_ecn' sysctl_net_ipv4.c
           sed -i 's/net->ipv4.sysctl_tcp_pacing_ss_ratio = 200;/net->ipv4.sysctl_tcp_pacing_ss_ratio = 150;/' tcp_ipv4.c
           sed -i 's/net->ipv4.sysctl_tcp_pacing_ca_ratio = 120;/net->ipv4.sysctl_tcp_pacing_ca_ratio = 110;/' tcp_ipv4.c
-          grep "sysctl_tcp_pacing" tcp_ipv4.c
-          ls -t | grep -E 'tcp_|sysctl_'
-
-          # Use BFQ io
-
-          #echo "CONFIG_IOSCHED_BFQ=y" >> "$DEFCONFIG"
-          #echo "CONFIG_DEFAULT_BFQ=y" >> "$DEFCONFIG"
-          #echo "CONFIG_DEFAULT_NOOP=n" >> "$DEFCONFIG"
-          #echo "CONFIG_DEFAULT_MQ_DEADLINE=n" >> "$DEFCONFIG"
-          #echo "CONFIG_DEFAULT_IOSCHED=\"bfq\"" >> "$DEFCONFIG"
           
           git status
           cat "$DEFCONFIG"
@@ -448,8 +436,14 @@ jobs:
           for disks in /sys/block/*/queue; do
               echo 0 > "$disks/iostats"
           done
+          echo 0 > /proc/sched_schedstats
+          
           echo "4674" > /sys/kernel/oplus_display/max_brightness
           echo "0" > /sys/devices/system/cpu/pmu_lib/enable_counters
+          echo "1888" > /sys/class/qcom-haptics/vmax
+          echo "2688" > /sys/class/qcom-haptics/cl_vmax
+          echo "9898" > /sys/class/qcom-haptics/fifo_vmax
+          
           stop statsd
           stop tombstoned
           stop logd
@@ -466,7 +460,21 @@ jobs:
               rm -f /data/adb/post-fs-data.d/kernel-conf.sh
               exit 0
           fi
+          
+          echo fq > /proc/sys/net/core/default_qdisc 2>/dev/null
+          echo 1 > /proc/sys/net/ipv4/tcp_window_scaling 2>/dev/null
+          echo "4096 87380 16777216" > /proc/sys/net/ipv4/tcp_rmem 2>/dev/null
+          echo "4096 65536 16777216" > /proc/sys/net/ipv4/tcp_wmem 2>/dev/null
+          echo 16777216 > /proc/sys/net/core/rmem_max 2>/dev/null
+          echo 16777216 > /proc/sys/net/core/wmem_max 2>/dev/null
+          echo 4096 > /proc/sys/net/ipv4/tcp_max_syn_backlog 2>/dev/null
+          echo 1 > /proc/sys/net/ipv4/tcp_mtu_probing 2>/dev/null
 
+          echo 1 > /proc/sys/net/ipv6/tcp_ecn 2>/dev/null
+          echo "4096 87380 16777216" > /proc/sys/net/ipv6/tcp_rmem 2>/dev/null
+          echo "4096 65536 16777216" > /proc/sys/net/ipv6/tcp_wmem 2>/dev/null
+
+          
           resetprop persist.logd.flowctrl.on 0
           resetprop persist.logd.flowctrl.method 0
           resetprop ro.logd.flowctrl.on 0
@@ -480,6 +488,9 @@ jobs:
           resetprop persist.sys.ostats_pullerd.enable 0
           resetprop persist.sys.ostatsd.enable 0
           resetprop debug.sf.oplus_display_trace.enable 0
+
+          resetprop net.core.default_qdisc fq
+          resetprop net.ipv4.tcp_congestion_control bbr
           
           pfsd
           
