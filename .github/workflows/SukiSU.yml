@@ -425,7 +425,7 @@ jobs:
           git clone https://github.com/schqiushui/AnyKernel3-KernelSU-Next.git -b gki-2.0 --depth=1 && rm -rf ./AnyKernel3-KernelSU-Next/.git
 
           # Add runtime scripts
-          cd "$WORKSPACE/AnyKernel3-KernelSU-Next
+          cd "$WORKSPACE/AnyKernel3-KernelSU-Next"
           
           cat <<'ak'>> ./anykernel.sh
           
