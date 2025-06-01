@@ -448,8 +448,8 @@ jobs:
           for disks in /sys/block/*/queue; do
               echo 0 > "$disks/iostats"
           done
-          echo "4674" >> /sys/kernel/oplus_display/max_brightness
-          echo "0" >> /sys/devices/system/cpu/pmu_lib/enable_counters
+          echo "4674" > /sys/kernel/oplus_display/max_brightness
+          echo "0" > /sys/devices/system/cpu/pmu_lib/enable_counters
           stop statsd
           stop tombstoned
           stop logd
