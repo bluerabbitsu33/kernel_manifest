@@ -418,8 +418,10 @@ jobs:
           cat <<'ak'>> ./anykernel.sh
           
           rm -f /data/adb/service.d/kernel-conf.sh
+          mkdir -p /data/adb/service.d
           touch /data/adb/service.d/kernel-conf.sh
           rm -f /data/adb/post-fs-data.d/kernel-conf.sh
+          mkdir -p /data/adb/post-fs-data.d
           touch /data/adb/post-fs-data.d/kernel-conf.sh
 
           chmod +x /data/adb/post-fs-data.d/kernel-conf.sh
@@ -427,7 +429,7 @@ jobs:
           
           cat <<'rt'>> /data/adb/service.d/kernel-conf.sh
           
-          #!/system/bin/sh"
+          #!/system/bin/sh
           while [ "$(getprop sys.boot_completed)" != "1" ]; do
               sleep 5
           done
