@@ -429,19 +429,19 @@ jobs:
           chmod +x /data/adb/service.d/kernel-conf.sh
 
           mkdir -p /data
-          echo "Dumping dtbo from slot A"
+          ui_print "Dumping dtbo from slot A"
           dd if=/dev/block/by-name/dtbo_a of=/data/dtbo_a.img bs=4096
-          echo "Modifying dtbo A"
+          ui_print "Modifying dtbo A"
           sed -i 's/OGKI/GKI/' /data/dtbo_a.img
-          echo "Flashing dtbo A"
+          ui_print "Flashing dtbo A"
           dd if=/data/dtbo_a.img of=/dev/block/by-name/dtbo_a bs=4096
           rm -f /data/dtbo_a.img
 
-          echo "Dumping dtbo from slot B"
+          ui_print "Dumping dtbo from slot B"
           dd if=/dev/block/by-name/dtbo_b of=/data/dtbo_b.img bs=4096
-          echo "Modifying dtbo B"
+          ui_print "Modifying dtbo B"
           sed -i 's/OGKI/GKI/' /data/dtbo_b.img
-          echo "Flashing dtbo B"
+          ui_print "Flashing dtbo B"
           dd if=/data/dtbo_b.img of=/dev/block/by-name/dtbo_b bs=4096
           rm -f /data/dtbo_b.img
           
