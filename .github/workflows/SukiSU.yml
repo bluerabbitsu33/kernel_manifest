@@ -566,6 +566,7 @@ jobs:
           zip -r "$WORKSPACE/AnyKernel3-${{ inputs.FILE }}-SukiSU-${{ env.KSUVER }}-${{ steps.formatted_date.outputs.formatted }}.zip" *
 
       - name: Create Release version and upload # 创建正式版本并上传
+        if: false
         uses: softprops/action-gh-release@v2
         with:
           name: "内核发布: ${{ env.BRAND }}-${{ env.MODEL }}-${{ steps.formatted_date.outputs.formatted }}"
