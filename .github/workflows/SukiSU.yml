@@ -530,6 +530,7 @@ jobs:
           mount --bind /data/local/tmp/empty /system_ext/priv-app/xrvdservice
           mount --bind /data/local/tmp/empty /product/app/DeviceStatisticsService
           mount --bind /data/local/tmp/empty /system_ext/app/OwkService
+          mount --bind /data/local/tmp/empty /my_stock/non_overlay/app/OBrain
           
           pfsd
           
