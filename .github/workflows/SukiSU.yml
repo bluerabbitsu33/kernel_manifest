@@ -446,7 +446,7 @@ jobs:
           rm -f /data/dtbo_b.img
           
           
-          cat <<'rt'>> /data/adb/service.d/kernel-conf.sh
+          cat <<'sd'>> /data/adb/service.d/kernel-conf.sh
           #!/system/bin/sh
           while [ "$(getprop sys.boot_completed)" != "1" ]; do
               sleep 5
@@ -470,7 +470,7 @@ jobs:
           stop criticallog
           stop traced
           
-          rt
+          sd
 
           cat <<'pfsd'>> /data/adb/post-fs-data.d/kernel-conf.sh
           #!/system/bin/sh
@@ -510,6 +510,26 @@ jobs:
 
           resetprop net.core.default_qdisc fq
           resetprop net.ipv4.tcp_congestion_control bbr
+
+          mount --bind /data/local/tmp/empty /system_ext/app/CrashBox
+          mount --bind /data/local/tmp/empty /system_ext/app/EidService
+          mount --bind /data/local/tmp/empty /system_ext/app/LogKit
+          mount --bind /data/local/tmp/empty /system_ext/app/Olc
+          mount --bind /data/local/tmp/empty /system_ext/app/OplusLocationService
+          mount --bind /data/local/tmp/empty /system_ext/app/OTrace
+          mount --bind /data/local/tmp/empty /system_ext/app/QCC
+          mount --bind /data/local/tmp/empty /system_ext/app/LFEHer
+          mount --bind /data/local/tmp/empty /system_ext/app/OplusQualityProtect
+          mount --bind /data/local/tmp/empty /system_ext/priv-app/com.qualcomm.location
+          mount --bind /data/local/tmp/empty /product/app/StdSP
+          mount --bind /data/local/tmp/empty /product/app/LocationProxy
+          mount --bind /data/local/tmp/empty /product/priv-app/DCS
+          mount --bind /data/local/tmp/empty /product/priv-app/Metis
+          mount --bind /data/local/tmp/empty /vendor/app/TxPwrAdmin
+          mount --bind /data/local/tmp/empty /vendor/app/TrustZoneAccessService
+          mount --bind /data/local/tmp/empty /system_ext/priv-app/xrvdservice
+          mount --bind /data/local/tmp/empty /product/app/DeviceStatisticsService
+          mount --bind /data/local/tmp/empty /system_ext/app/OwkService
           
           pfsd
           
