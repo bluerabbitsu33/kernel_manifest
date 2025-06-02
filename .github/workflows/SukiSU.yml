@@ -461,14 +461,14 @@ jobs:
           echo "4674" > /sys/kernel/oplus_display/max_brightness
           echo "0" > /sys/devices/system/cpu/pmu_lib/enable_counters
           echo "1888" > /sys/class/qcom-haptics/vmax
-          echo "2688" > /sys/class/qcom-haptics/cl_vmax
-          echo "9898" > /sys/class/qcom-haptics/fifo_vmax
+          echo "8300" > /sys/class/qcom-haptics/cl_vmax
+          echo "11451" > /sys/class/qcom-haptics/fifo_vmax
           
           stop statsd
           stop tombstoned
-          stop logd
           stop criticallog
           stop traced
+          stop traced_probes
           
           sd
 
