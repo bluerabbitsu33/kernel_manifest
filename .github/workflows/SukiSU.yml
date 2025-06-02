@@ -456,7 +456,7 @@ jobs:
           for disks in /sys/block/*/queue; do
               echo 0 > "$disks/iostats"
           done
-          echo 0 > /proc/sched_schedstats
+          echo 0 > /proc/sys/kernel/sched_schedstats
           
           echo "4674" > /sys/kernel/oplus_display/max_brightness
           echo "0" > /sys/devices/system/cpu/pmu_lib/enable_counters
