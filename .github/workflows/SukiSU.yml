@@ -310,8 +310,8 @@ jobs:
           echo "CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=y" >> "$DEFCONFIG"
 
           # Filesystem Features
-          #echo "CONFIG_TMPFS_XATTR=y" >> "$DEFCONFIG"
-          #echo "CONFIG_TMPFS_POSIX_ACL=y" >> "$DEFCONFIG"
+          echo "CONFIG_TMPFS_XATTR=y" >> "$DEFCONFIG"
+          echo "CONFIG_TMPFS_POSIX_ACL=y" >> "$DEFCONFIG"
           
 
           # Use SukiSU default config
@@ -469,7 +469,6 @@ jobs:
           stop logd
           stop criticallog
           stop traced
-          stop netd
           
           rt
 
