@@ -433,7 +433,7 @@ jobs:
           chmod +x /data/adb/post-fs-data.d/kernel-conf.sh
           chmod +x /data/adb/service.d/kernel-conf.sh
 
-          if [ "$(getprop ro.boot.prjname)" != "23893" ]; then
+          if [ "$(getprop ro.product.name)" != "CPH2653" ] && [ "$(getprop ro.product.name)" != "CPH2649" ] && [ "$(getprop ro.product.name)" != "CPH2655" ]; then
               ui_print "Your device is not a dodge-23893 (global op13)"
               ui_print "Therefore patching dtbo"
               ui_print "If you bootloop after flashing then report it and mention this message"
