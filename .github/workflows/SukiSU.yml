@@ -359,8 +359,8 @@ jobs:
           # Remove unnecessary defconfig entries
           sed -i "s/CONFIG_PRINTK_TIME=y/CONFIG_PRINTK_TIME=n/" "$DEFCONFIG"
           sed -i "s/CONFIG_PRINTK_CALLER=y/CONFIG_PRINTK_CALLER=n/" "$DEFCONFIG"
-          #sed -i "s/CONFIG_AUDIT=y/CONFIG_AUDIT=n/" "$DEFCONFIG"
-          sed -i "s/CONFIG_TASKSTATS=y/CONFIG_TASKSTATS=n/" "$DEFCONFIG"
+          sed -i "s/CONFIG_AUDIT=y/CONFIG_AUDIT=n/" "$DEFCONFIG"
+          #sed -i "s/CONFIG_TASKSTATS=y/CONFIG_TASKSTATS=n/" "$DEFCONFIG"
           #sed -i "s/CONFIG_UBSAN=y/CONFIG_UBSAN=n/" "$DEFCONFIG"
           #sed -i "s/CONFIG_KASAN=y/CONFIG_KASAN=n/" "$DEFCONFIG"
 
