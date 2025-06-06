@@ -227,27 +227,11 @@ jobs:
           echo "CONFIG_TMPFS_XATTR=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_TMPFS_POSIX_ACL=y" >> ./common/arch/arm64/configs/gki_defconfig
           
-          # Add bbr and fq config setting
-          echo "CONFIG_TCP_CONG_ADVANCED=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_TCP_CONG_BBR=y" >> ./common/arch/arm64/configs/gki_defconfig
-          #echo "CONFIG_DEFAULT_CUBIC=n" >> ./common/arch/arm64/configs/gki_defconfig
-          #echo "CONFIG_DEFAULT_BBR=y" >> ./common/arch/arm64/configs/gki_defconfig
-          #echo 'CONFIG_DEFAULT_TCP_CONG="bbr"' >> ./common/arch/arm64/configs/gki_defconfig
-          #echo "CONFIG_NET_SCH_DEFAULT=y" >> ./common/arch/arm64/configs/gki_defconfig
-          #echo "CONFIG_DEFAULT_FQ=y" >> ./common/arch/arm64/configs/gki_defconfig
-          #echo 'CONFIG_DEFAULT_NET_SCH="fq"' >> ./common/arch/arm64/configs/gki_defconfig
-          #echo "CONFIG_NET_SCH_HTB=n" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_TCP_CONG_BIC=n" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_TCP_CONG_WESTWOOD=n" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_TCP_CONG_HTCP=n" >> ./common/arch/arm64/configs/gki_defconfig
-          
           # Add zram config setting
-          if [ "${{ inputs.kernel_version }}" != "5.10" ]; then
-            echo "CONFIG_ZRAM_DEF_COMP_LZORLE=n" >> ./common/arch/arm64/configs/gki_defconfig
-            echo "CONFIG_ZRAM_DEF_COMP_LZO=n" >> ./common/arch/arm64/configs/gki_defconfig
-            echo "CONFIG_ZRAM_DEF_COMP_LZ4=y" >> ./common/arch/arm64/configs/gki_defconfig
-            echo 'CONFIG_ZRAM_DEF_COMP="lz4"' >> ./common/arch/arm64/configs/gki_defconfig
-          fi
+          echo "CONFIG_ZRAM_DEF_COMP_LZORLE=n" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_ZRAM_DEF_COMP_LZO=n" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_ZRAM_DEF_COMP_LZ4=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo 'CONFIG_ZRAM_DEF_COMP="lz4"' >> ./common/arch/arm64/configs/gki_defconfig
 
           # Kernel UNAME
           sed -i 's/^\(CONFIG_LOCALVERSION="[^"]*\)"/\1-Epicmann24"/' ./common/arch/arm64/configs/gki_defconfig
@@ -256,8 +240,8 @@ jobs:
           echo "CONFIG_BOEFFLA_WL_BLOCKER=y" >> ./common/arch/arm64/configs/gki_defconfig
 
           # Optimisation
-          echo "CONFIG_WQ_POWER_EFFICIENT_DEFAULT=y" >> "$DEFCONFIG"
-          echo "CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=y" >> "$DEFCONFIG"
+          echo "CONFIG_WQ_POWER_EFFICIENT_DEFAULT=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=y" >> ./common/arch/arm64/configs/gki_defconfig
 
           # Add tethering config setting
           echo "CONFIG_IP_NF_TARGET_TTL=y" >> ./common/arch/arm64/configs/gki_defconfig
@@ -265,18 +249,18 @@ jobs:
           echo "CONFIG_IP6_NF_MATCH_HL=y" >> ./common/arch/arm64/configs/gki_defconfig
 
           # Add bbr and fq config setting
-          echo "CONFIG_TCP_CONG_ADVANCED=y" >> "$DEFCONFIG"
-          echo "CONFIG_TCP_CONG_BBR=y" >> "$DEFCONFIG"
-          #echo "CONFIG_DEFAULT_CUBIC=n" >> "$DEFCONFIG"
-          #echo "CONFIG_NET_SCH_DEFAULT=y" >> "$DEFCONFIG"
-          #echo "CONFIG_DEFAULT_FQ=y" >>  "$DEFCONFIG"
-          #echo 'CONFIG_DEFAULT_NET_SCH="fq"' >> "$DEFCONFIG"
-          #echo "CONFIG_NET_SCH_HTB=n" >> "$DEFCONFIG"
-          #echo 'CONFIG_DEFAULT_TCP_CONG="bbr"' >> "$DEFCONFIG"
-          echo "CONFIG_TCP_CONG_BIC=n" >> "$DEFCONFIG"
-          echo "CONFIG_TCP_CONG_WESTWOOD=n" >> "$DEFCONFIG"
-          echo "CONFIG_TCP_CONG_HTCP=n" >> "$DEFCONFIG"
-          echo "CONFIG_DEFAULT_BBR=y" >>  "$DEFCONFIG"
+          echo "CONFIG_TCP_CONG_ADVANCED=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_TCP_CONG_BBR=y" >> ./common/arch/arm64/configs/gki_defconfig
+          #echo "CONFIG_DEFAULT_CUBIC=n" >> ./common/arch/arm64/configs/gki_defconfig
+          #echo "CONFIG_NET_SCH_DEFAULT=y" >> ./common/arch/arm64/configs/gki_defconfig
+          #echo "CONFIG_DEFAULT_FQ=y" >> ./common/arch/arm64/configs/gki_defconfig
+          #echo 'CONFIG_DEFAULT_NET_SCH="fq"' >> ./common/arch/arm64/configs/gki_defconfig
+          #echo "CONFIG_NET_SCH_HTB=n" >> ./common/arch/arm64/configs/gki_defconfig
+          #echo 'CONFIG_DEFAULT_TCP_CONG="bbr"' >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_TCP_CONG_BIC=n" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_TCP_CONG_WESTWOOD=n" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_TCP_CONG_HTCP=n" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_DEFAULT_BBR=y" >>  ./common/arch/arm64/configs/gki_defconfig
           
           # Add rcu config setting
           echo "CONFIG_RCU_TRACE=n" >> ./common/arch/arm64/configs/gki_defconfig
@@ -284,8 +268,8 @@ jobs:
           echo "CONFIG_IP_NF_TARGET_ECN=y" >> ./common/arch/arm64/configs/gki_defconfig
           
           # Remove unnecessary defconfig entries
-          sed -i "s/CONFIG_PRINTK_TIME=y/CONFIG_PRINTK_TIME=n/" "$DEFCONFIG"
-          sed -i "s/CONFIG_PRINTK_CALLER=y/CONFIG_PRINTK_CALLER=n/" "$DEFCONFIG"
+          sed -i "s/CONFIG_PRINTK_TIME=y/CONFIG_PRINTK_TIME=n/" ./common/arch/arm64/configs/gki_defconfig
+          sed -i "s/CONFIG_PRINTK_CALLER=y/CONFIG_PRINTK_CALLER=n/" ./common/arch/arm64/configs/gki_defconfig
 
           # Optimize networking
           cd "./common/net/ipv4"
