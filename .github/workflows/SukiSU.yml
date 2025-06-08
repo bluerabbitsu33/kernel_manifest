@@ -319,6 +319,9 @@ jobs:
           echo "CONFIG_HZ_100=y" >> "$DEFCONFIG"
           echo "CONFIG_HZ=100" >> "$DEFCONFIG"
 
+          sed -i 's/CONFIG_PM_WAKELOCKS_LIMIT=0/CONFIG_PM_WAKELOCKS_LIMIT=10/' "$DEFCONFIG"
+          sed -i 's/# CONFIG_PM_WAKELOCKS_GC is not set/CONFIG_PM_WAKELOCKS_GC=y/' "$DEFCONFIG"
+
           # Filesystem Features
           echo "CONFIG_TMPFS_XATTR=y" >> "$DEFCONFIG"
           echo "CONFIG_TMPFS_POSIX_ACL=y" >> "$DEFCONFIG"
