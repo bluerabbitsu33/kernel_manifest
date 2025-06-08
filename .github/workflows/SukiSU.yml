@@ -318,19 +318,19 @@ jobs:
           echo "CONFIG_DYNAMIC_FTRACE_WITH_CALL_OPS=y" >> "$DEFCONFIG"
           echo "CONFIG_HZ_100=y" >> "$DEFCONFIG"
           echo "CONFIG_HZ=100" >> "$DEFCONFIG"
-
+          sed -i 's/-O2/-O3/' "$COMMON/Makefile"
           sed -i 's/CONFIG_PM_WAKELOCKS_LIMIT=0/CONFIG_PM_WAKELOCKS_LIMIT=10/' "$DEFCONFIG"
           sed -i 's/# CONFIG_PM_WAKELOCKS_GC is not set/CONFIG_PM_WAKELOCKS_GC=y/' "$DEFCONFIG"
 
           # Add Maple IO scheduler
           echo "CONFIG_IOSCHED_MAPLE=y" >> "$DEFCONFIG"
           curl -L https://raw.githubusercontent.com/xellDart/Maple-IO-Scheduler/refs/heads/master/maple-iosched.c -o "$COMMON/block/maple-iosched.c"
-          sed '/obj-$(CONFIG_IOSCHED_BFQ)/a\obj-$(CONFIG_SCHED_MAPLE) += maple-iosched.o' "$COMMON/block/Makefile"
+          sed '/obj-$(CONFIG_IOSCHED_BFQ)/a\obj-$(CONFIG_IOSCHED_MAPLE) += maple-iosched.o' "$COMMON/block/Makefile"
           sed -i '/endmenu/i\
           config IOSCHED_MAPLE\n\
                  tristate "Maple I/O scheduler"\n\
-                 depends on BLK_CGROUP  # or whatever its deps are\n\
-                 select SCHED_DEADLINE   # if it reuses deadline helpers\n\
+                 depends on BLK_CGROUP\n\
+                 select MQ_IOSCHED_DEADLINE\n\
                  help\n\
                  Maple is a lightweight read-first FIFO I/O scheduler with\n\
                  batched writes.  See block/iosched/maple/maple-iosched.c.' "$COMMON/block/Kconfig.iosched"
