@@ -316,6 +316,8 @@ jobs:
           echo "CONFIG_WQ_POWER_EFFICIENT_DEFAULT=y" >> "$DEFCONFIG"
           echo "CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=y" >> "$DEFCONFIG"
           echo "CONFIG_DYNAMIC_FTRACE_WITH_CALL_OPS=y" >> "$DEFCONFIG"
+          echo "CONFIG_HZ_100=y" >> "$DEFCONFIG"
+          echo "CONFIG_HZ=100" >> "$DEFCONFIG"
 
           # Filesystem Features
           echo "CONFIG_TMPFS_XATTR=y" >> "$DEFCONFIG"
