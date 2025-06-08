@@ -242,6 +242,7 @@ jobs:
           # Optimisation
           echo "CONFIG_WQ_POWER_EFFICIENT_DEFAULT=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_DYNAMIC_FTRACE_WITH_CALL_OPS=y" >> ./common/arch/arm64/configs/gki_defconfig
 
           # Add tethering config setting
           echo "CONFIG_IP_NF_TARGET_TTL=y" >> ./common/arch/arm64/configs/gki_defconfig
