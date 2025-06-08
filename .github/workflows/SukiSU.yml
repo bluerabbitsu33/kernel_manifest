@@ -322,6 +322,19 @@ jobs:
           sed -i 's/CONFIG_PM_WAKELOCKS_LIMIT=0/CONFIG_PM_WAKELOCKS_LIMIT=10/' "$DEFCONFIG"
           sed -i 's/# CONFIG_PM_WAKELOCKS_GC is not set/CONFIG_PM_WAKELOCKS_GC=y/' "$DEFCONFIG"
 
+          # Add Maple IO scheduler
+          echo "CONFIG_IOSCHED_MAPLE=y" >> "$DEFCONFIG"
+          curl -L https://raw.githubusercontent.com/xellDart/Maple-IO-Scheduler/refs/heads/master/maple-iosched.c -o "$COMMON/block/maple-iosched.c"
+          sed '/obj-$(CONFIG_IOSCHED_BFQ)/a\obj-$(CONFIG_SCHED_MAPLE) += maple-iosched.o' "$COMMON/block/Makefile"
+          sed -i '/endmenu/i\
+          config IOSCHED_MAPLE\n\
+                 tristate "Maple I/O scheduler"\n\
+                 depends on BLK_CGROUP  # or whatever its deps are\n\
+                 select SCHED_DEADLINE   # if it reuses deadline helpers\n\
+                 help\n\
+                 Maple is a lightweight read-first FIFO I/O scheduler with\n\
+                 batched writes.  See block/iosched/maple/maple-iosched.c.' "$COMMON/block/Kconfig.iosched"
+
           # Filesystem Features
           echo "CONFIG_TMPFS_XATTR=y" >> "$DEFCONFIG"
           echo "CONFIG_TMPFS_POSIX_ACL=y" >> "$DEFCONFIG"
@@ -459,7 +472,7 @@ jobs:
         if: ${{ inputs.VFS_PATCH == 'enable' }}
         run: |
           cd "$WORKSPACE/image_output"
-          curl -LO https://github.com/ShirkNeko/SukiSU_KernelPatch_patch/releases/download/v0.11.4/patch_linux
+          curl -LO https://github.com/SukiSU-Ultra/SukiSU_KernelPatch_patch/releases/download/0.11.4/patch_linux
           chmod +x patch_linux
           ./patch_linux || { echo "应用 patch_linux 失败"; exit 1; }
 
