@@ -324,7 +324,7 @@ jobs:
           # Add Maple IO scheduler
           echo "CONFIG_IOSCHED_MAPLE=y" >> "$DEFCONFIG"
           curl -L https://raw.githubusercontent.com/xellDart/Maple-IO-Scheduler/refs/heads/master/maple-iosched.c -o "$COMMON/block/maple-iosched.c"
-          sed '/CONFIG_IOSCHED_BFQ/a\obj-$(CONFIG_IOSCHED_MAPLE) += maple-iosched.o' "$COMMON/block/Makefile"
+          sed -i '/CONFIG_IOSCHED_BFQ/a\obj-$(CONFIG_IOSCHED_MAPLE) += maple-iosched.o' "$COMMON/block/Makefile"
           sed -i '/endmenu/i\
           config IOSCHED_MAPLE\n\
                  tristate "Maple I/O scheduler"\n\
