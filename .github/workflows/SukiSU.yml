@@ -288,7 +288,7 @@ jobs:
           
           sed -i "/stable_scmversion_cmd/s/-maybe-dirty//g" "$PLATFORM/build/kernel/kleaf/impl/stamp.bzl"
           sed -i '/KMI_GENERATION/s/-$oki_infix//g' "$PLATFORM/build/kernel/kleaf/impl/stamp.bzl"
-          sed -i 's/-4k/Epicmann24/' "$DEFCONFIG"
+          sed -i 's/-4k/-Epicmann24/' "$DEFCONFIG"
 
           # Set ZRAM
           echo "CONFIG_ZRAM_DEF_COMP_LZORLE=n" >> "$DEFCONFIG"
