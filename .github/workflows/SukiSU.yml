@@ -405,9 +405,9 @@ jobs:
 
           echo "开始构建内核，构建类型：$BUILD_TYPE"
           if [ -f ./kernel_platform/build_with_bazel.py ]; then
+          echo "1st build"
             ./kernel_platform/oplus/bazel/oplus_modules_variant.sh ${{ inputs.Chipset }} "$BUILD_TYPE" ""
             ./kernel_platform/build_with_bazel.py -t ${{ inputs.Chipset }} $BUILD_TYPE "${BAZEL_ARGS[@]}" -o "$(pwd)/out"
-            echo "1st build"
           else
             echo "2nd build" #original
             LTO=thin ./kernel_platform/oplus/build/oplus_build_kernel.sh ${{ inputs.Chipset }} "$BUILD_TYPE"
