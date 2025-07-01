@@ -13,7 +13,7 @@ on:
         required: true
         type: choice
         options:
-          - oneplus_13
+          - oneplus_13t
         default: oneplus_13
 
       Chipset:
