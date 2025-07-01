@@ -184,13 +184,11 @@ jobs:
           repo sync -c -j$(nproc --all) --no-tags || { echo "repo sync 失败"; exit 1; }
           
           #rm -rf $PLATFORM/prebuilts/clang/host/linux-x86/clang-r510928
-          #git clone https://gitlab.com/kei-space/clang/r547379.git $PLATFORM/prebuilts/clang/host/linux-x86/clang-r547379
+          #git clone https://gitlab.com/kei-space/clang/r522817.git $PLATFORM/prebuilts/clang/host/linux-x86/clang-r522817
           
-          #cd $PLATFORM/prebuilts/clang/host/linux-x86
-          #rm -rf clang-r522817 clang-r530567 clang-r536225
-          #mv clang-r563880 clang-r510928
+          rm -rf "$PLATFORM/prebuilts/clang/host/linux-x86/clang-r510928"
           
-          #sed -i 's/r510928/r547379/g' $PLATFORM/common/build.config.constants
+          sed -i 's/r510928/r522817/g' $PLATFORM/common/build.config.constants
           #sed -i 's/r510928/r547379/g' $PLATFORM/msm-kernel/build.config.constants
           #sed -i 's/r510928/r547379/g' $PLATFORM/.source_date_epoch_dir/build.config.constants
           #sed -i '/VERSIONS = \[/,/\]/c\VERSIONS = [\n    # keep sorted\n    "r547379",\n]' $PLATFORM/prebuilts/clang/host/linux-x86/kleaf/versions.bzl
@@ -200,7 +198,7 @@ jobs:
         run: |
           echo "KSU_TYPE=$(echo '${{ inputs.KSU_CONFIG }}' | cut -d'_' -f1)" >> $GITHUB_ENV
           if [[ "${{ inputs.KSU_CONFIG }}" == "SukiSU_dev" ]]; then
-            echo "SukiSU_BRANCH=susfs-dev" >> $GITHUB_ENV
+            echo "SukiSU_BRANCH=susfs-main" >> $GITHUB_ENV
           elif [[ "${{ inputs.KSU_CONFIG }}" == "SukiSU_stable" ]]; then
             echo "SukiSU_BRANCH=susfs-stable" >> $GITHUB_ENV
           fi
@@ -235,7 +233,7 @@ jobs:
           cd "$COMMON"
           echo "正在给内核打 susfs 补丁..."
 
-          if [[ "${{ env.KERNEL_VERSION }}" == "6.6" && "${{ inputs.FILE }}" != "oneplus_13t_v" ]]; then
+          if [[ "${{ env.KERNEL_VERSION }}" == "6.6" && "${{ inputs.FILE }}" != "oneplus_13t" ]]; then
             sed -i '/#include <trace\/hooks\/blk.h>/a #include <trace/hooks/fs.h>' ./fs/namespace.c
           fi
 
@@ -293,6 +291,9 @@ jobs:
           # Set ZRAM
           echo "CONFIG_ZRAM_DEF_COMP_LZORLE=n" >> "$DEFCONFIG"
           echo "CONFIG_ZRAM_DEF_COMP_LZO=n" >> "$DEFCONFIG"
+          echo "CONFIG_ZRAM_DEF_COMP_ZSTD=n" >> "$DEFCONFIG"
+          echo "CONFIG_ZRAM_DEF_COMP_LZ4HC=n" >> "$DEFCONFIG"
+          echo "CONFIG_ZRAM_DEF_COMP_842=n" >> "$DEFCONFIG"
           echo "CONFIG_ZRAM_DEF_COMP_LZ4=y" >> "$DEFCONFIG"
           echo 'CONFIG_ZRAM_DEF_COMP="lz4"' >> "$DEFCONFIG"
 
@@ -310,28 +311,15 @@ jobs:
 
           # Wakelock Blocker
           echo "CONFIG_BOEFFLA_WL_BLOCKER=y" >> "$DEFCONFIG"
+          sed -i 's/CONFIG_PM_WAKELOCKS_LIMIT=0/CONFIG_PM_WAKELOCKS_LIMIT=10/' "$DEFCONFIG"
+          sed -i 's/# CONFIG_PM_WAKELOCKS_GC is not set/CONFIG_PM_WAKELOCKS_GC=y/' "$DEFCONFIG"
           sed -i 's/placeholder/gauge;sscrpcd:2310;b0000000.qcom,cnss-peach;wired wakelock;cne_wl_;radio-data-interface;fastrpc-secure;eventpoll;event0;event8;event2;event3;9-0028;amd_lock;lux_aod_lock;a600000.ssusb;qcom_rx_wakelock;wlan;wlan_wow_wl;NETLINK;IPA_WS;\[timerfd\];wlan_ipa;wlan_pno_wl;DIAG_WS;qcom_sap_wakelock;pmo_wow_wl;898000.qcom,qup_uart;rmnet_ctl;hal_bluetooth_lock;SensorsHAL_WAKEUP;ena600000.ssusb;gesture_prox_lock;gnss_hal;prox_lock;IPA_CLIENT_APPS_LAN_CONS;IPA_CLIENT_APPS_WAN_LOW_LAT_CONS;RMNET_SHS;IPA_CLIENT_APPS_WAN_COAL_CONS;oplus_shaking_lock;8-0028;phone_prox_lock;qrtr_ws;rmnet_ipa%d;wlan_ap_assoc_lost_wl;radio-data-interface;tftp_server_wakelock;pedometer_minute_lock;wlan_roam_ho_wl;10-0028;vdev_start;event8;eventpoll/' "$COMMON/drivers/base/power/boeffla_wl_blocker.h"
 
-          # Optimisation
+          # Optimization
           echo "CONFIG_WQ_POWER_EFFICIENT_DEFAULT=y" >> "$DEFCONFIG"
           echo "CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=y" >> "$DEFCONFIG"
           echo "CONFIG_DYNAMIC_FTRACE_WITH_CALL_OPS=y" >> "$DEFCONFIG"
-          echo "CONFIG_HZ_100=y" >> "$DEFCONFIG"
-          echo "CONFIG_HZ=100" >> "$DEFCONFIG"
-          sed -i 's/CONFIG_PM_WAKELOCKS_LIMIT=0/CONFIG_PM_WAKELOCKS_LIMIT=10/' "$DEFCONFIG"
-          sed -i 's/# CONFIG_PM_WAKELOCKS_GC is not set/CONFIG_PM_WAKELOCKS_GC=y/' "$DEFCONFIG"
-
-          # Add Maple IO scheduler
-          echo "CONFIG_IOSCHED_MAPLE=y" >> "$DEFCONFIG"
-          #curl -L https://raw.githubusercontent.com/xellDart/Maple-IO-Scheduler/refs/heads/master/maple-iosched.c -o "$COMMON/block/maple-iosched.c"
-          sed -i '/CONFIG_IOSCHED_BFQ/a\obj-$(CONFIG_IOSCHED_MAPLE) += maple-iosched.o' "$COMMON/block/Makefile"
-          sed -i '/endmenu/i\
-          config IOSCHED_MAPLE\n\
-                 tristate "Maple I/O scheduler"\n\
-                 default y\n\
-                 help\n\
-                 Maple is a lightweight read-first FIFO I/O scheduler with\n\
-                 batched writes.  See block/iosched/maple/maple-iosched.c.' "$COMMON/block/Kconfig.iosched"
+          echo "CONFIG_SCHED_CLUSTER=y" >> "$DEFCONFIG"
 
           # Filesystem Features
           echo "CONFIG_TMPFS_XATTR=y" >> "$DEFCONFIG"
@@ -377,6 +365,8 @@ jobs:
           # Remove unnecessary defconfig entries
           sed -i "s/CONFIG_PRINTK_TIME=y/CONFIG_PRINTK_TIME=n/" "$DEFCONFIG"
           sed -i "s/CONFIG_PRINTK_CALLER=y/CONFIG_PRINTK_CALLER=n/" "$DEFCONFIG"
+          echo "CONFIG_TCP_CONG_CUBIC=n" >> "$DEFCONFIG"
+          echo "CONFIG_MQ_IOSCHED_KYBER=n" >> "$DEFCONFIG"
 
           # Optimize networking
           cd "$COMMON/net/ipv4"
@@ -470,7 +460,7 @@ jobs:
         if: ${{ inputs.VFS_PATCH == 'enable' }}
         run: |
           cd "$WORKSPACE/image_output"
-          curl -LO https://github.com/SukiSU-Ultra/SukiSU_KernelPatch_patch/releases/download/0.11.4/patch_linux
+          curl -LO https://github.com/SukiSU-Ultra/SukiSU_KernelPatch_patch/releases/download/0.12.0/patch_linux
           chmod +x patch_linux
           ./patch_linux || { echo "应用 patch_linux 失败"; exit 1; }
 
