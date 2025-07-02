@@ -46,7 +46,7 @@ jobs:
             os_patch_level: "2025-05"
           - sub_level: "X"
             os_patch_level: "lts"
-    uses: ./.github/workflows/Common.yml
+    uses: ./.github/workflows/Common_Build.yml
     secrets: inherit
     with:
       android_version: "android15"
