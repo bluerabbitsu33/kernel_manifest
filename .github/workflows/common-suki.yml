@@ -408,7 +408,8 @@ jobs:
           else
           echo "second build"
             tools/bazel build --disk_cache=/home/runner/.cache/bazel --config=fast --lto=thin //common:kernel_aarch64_dist || exit 1
-
+          fi
+          
       - name: Make AnyKernel3 # 制作 AnyKernel3
         run: |
           cd "$WORKSPACE"
@@ -418,7 +419,7 @@ jobs:
           git clone https://github.com/epicmann24/AnyKernel3.git -b gki-2.0 --depth=1 && rm -rf ./AnyKernel3/.git
           
           # Copy kernel
-          IMAGE_PATH=$(find "$PLATFORM/../out" -name "Image")
+          IMAGE_PATH=$(find "$PLATFORM" -name "Image")
           if [ -n "$IMAGE_PATH" ]; then
             cp "$IMAGE_PATH" "$WORKSPACE/AnyKernel3/Image"
             cp "$IMAGE_PATH" "$WORKSPACE/image_output/Image"
