@@ -419,7 +419,7 @@ jobs:
           git clone https://github.com/epicmann24/AnyKernel3.git -b gki-2.0 --depth=1 && rm -rf ./AnyKernel3/.git
           
           # Copy kernel
-          IMAGE_PATH=$(find "$PLATFORM" -name "Image")
+          IMAGE_PATH=$(find "$PLATFORM/common/arch/arm64" -name "Image")
           if [ -n "$IMAGE_PATH" ]; then
             cp "$IMAGE_PATH" "$WORKSPACE/AnyKernel3/Image"
             cp "$IMAGE_PATH" "$WORKSPACE/image_output/Image"
