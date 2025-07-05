@@ -277,12 +277,6 @@ jobs:
           # Adjust localversion strings
           sed -i 's/check_defconfig//' "$PLATFORM/common/build.config.gki"
           sed -i 's/ -dirty//g' "$PLATFORM/common/scripts/setlocalversion"
-          sed -i 's/ -dirty//g' "$PLATFORM/msm-kernel/scripts/setlocalversion"
-          sed -i 's/ -dirty//g' "$PLATFORM/external/dtc/scripts/setlocalversion"
-
-          # Set LTO
-          sed -i '/echo "LTO $LTO "/i export LTO=thin' "$PLATFORM/oplus/build/oplus_setup.sh"
-          sed -i 's/export REPACK_IMG=true/export REPACK_IMG=false/g' "$PLATFORM/oplus/build/oplus_setup.sh"
           
           sed -i "/stable_scmversion_cmd/s/-maybe-dirty//g" "$PLATFORM/build/kernel/kleaf/impl/stamp.bzl"
           sed -i '/KMI_GENERATION/s/-$oki_infix//g' "$PLATFORM/build/kernel/kleaf/impl/stamp.bzl"
