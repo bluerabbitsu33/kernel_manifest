@@ -109,7 +109,7 @@ jobs:
       - name: Set Environment Variable # 设置内核环境变量
         run: |
           WORKSPACE_DIR="$GITHUB_WORKSPACE/kernel_workspace"
-          PLATFORM_DIR="$WORKSPACE_DIR/kernel_platform"
+          PLATFORM_DIR="$WORKSPACE_DIR"
           COMMON_DIR="$PLATFORM_DIR/common"
           DEFCONFIG="$COMMON_DIR/arch/arm64/configs/gki_defconfig"
 
