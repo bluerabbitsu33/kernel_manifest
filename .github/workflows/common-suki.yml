@@ -265,8 +265,8 @@ jobs:
           cd "$WORKSPACE"
 
           # Remove protected exports and strings
-          rm -f $PLATFORM/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
-          rm -f $PLATFORM/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
+          #rm -f $PLATFORM/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
+          #rm -f $PLATFORM/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
 
           # Set LTO
           sed -i 's/CONFIG_LTO=n/CONFIG_LTO=y/' "$DEFCONFIG"
