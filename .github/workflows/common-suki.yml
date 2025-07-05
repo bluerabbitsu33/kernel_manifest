@@ -181,7 +181,7 @@ jobs:
           mkdir "$WORKSPACE" && cd "$WORKSPACE"
           #repo init -u https://github.com/epicmann24/kernel_manifest.git -b refs/heads/oneplus/${{ inputs.SoC }} -m ${{ inputs.FILE }}.xml --depth=1 || { echo "repo init 失败"; exit 1; }
           #repo init -u https://github.com/schqiushui/kernel_manifest.git -b refs/heads/oneplus/${{ inputs.SoC }} -m oneplus_13_v.xml --depth=1 || { echo "repo init 失败"; exit 1; }
-          repo init --depth=1 --u https://android.googlesource.com/kernel/manifest -b common-android15-6.6-lts --repo-rev=v2.16
+          repo init --depth=1 --u https://android.googlesource.com/kernel/manifest -b common-android15-6.6-66 --repo-rev=v2.16
           repo sync -c -j$(nproc --all) --no-tags || { echo "repo sync 失败"; exit 1; }
 
           #git clone https://gitlab.com/kei-space/clang/r522817.git $PLATFORM/prebuilts/clang/host/linux-x86/clang-r522817
