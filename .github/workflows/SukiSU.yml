@@ -320,6 +320,15 @@ jobs:
           echo "CONFIG_DYNAMIC_FTRACE_WITH_CALL_OPS=y" >> "$DEFCONFIG"
           echo "CONFIG_SCHED_CLUSTER=y" >> "$DEFCONFIG"
 
+          # Polly
+          echo "CONFIG_LLVM_POLLY=y" >> "$DEFCONFIG"
+          echo "CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=y" >> "$DEFCONFIG"
+
+          # OPlus Features
+          echo "CONFIG_OPLUS_FEATURE_FRAME_BOOST=y" >> "$DEFCONFIG"
+          echo "CONFIG_FEATURE_CLOSE_LOOP=y" >> "$DEFCONFIG"
+          echo "CONFIG_OPLUS_FEATURE_SCHED_ASSIST=y" >> "$DEFCONFIG"
+
           # Filesystem Features
           echo "CONFIG_TMPFS_XATTR=y" >> "$DEFCONFIG"
           echo "CONFIG_TMPFS_POSIX_ACL=y" >> "$DEFCONFIG"
@@ -373,9 +382,6 @@ jobs:
           #sed -i '/\.procname[[:space:]]*=[[:space:]]*"tcp_ecn"/, /^[[:space:]]*\}/ s/SYSCTL_TWO/SYSCTL_ONE/' sysctl_net_ipv4.c
           sed -i 's/net->ipv4.sysctl_tcp_pacing_ss_ratio = 200;/net->ipv4.sysctl_tcp_pacing_ss_ratio = 150;/' tcp_ipv4.c
           sed -i 's/net->ipv4.sysctl_tcp_pacing_ca_ratio = 120;/net->ipv4.sysctl_tcp_pacing_ca_ratio = 110;/' tcp_ipv4.c
-
-          #WireGuard and misc
-          echo "CONFIG_WIREGUARD=y" >> "$DEFCONFIG"
           
           git status
           cat "$DEFCONFIG"
@@ -486,6 +492,12 @@ jobs:
         with:
           name: "Image-${{ inputs.FILE }}-SukiSU-${{ env.KSUVER }}-${{ steps.formatted_date.outputs.formatted }}"
           path: ${{ env.WORKSPACE }}/image_output/*
+          
+      - name: Upload config # 上传 Config
+        uses: actions/upload-artifact@v4
+        with:
+          name: "Config"
+          path: ${{ env.WORKSPACE }}/kernel_platform/common/.config
 
       - name: Zip AnyKernel3 # 创建 AnyKernel3 压缩文件
         run: |
