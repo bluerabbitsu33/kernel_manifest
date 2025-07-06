@@ -325,9 +325,9 @@ jobs:
           #echo "CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=y" >> "$DEFCONFIG"
 
           # OPlus Features
-          echo "CONFIG_OPLUS_FEATURE_FRAME_BOOST=y" >> "$DEFCONFIG"
-          echo "CONFIG_FEATURE_CLOSE_LOOP=y" >> "$DEFCONFIG"
-          echo "CONFIG_OPLUS_FEATURE_SCHED_ASSIST=y" >> "$DEFCONFIG"
+          #echo "CONFIG_OPLUS_FEATURE_FRAME_BOOST=y" >> "$DEFCONFIG"
+          #echo "CONFIG_FEATURE_CLOSE_LOOP=y" >> "$DEFCONFIG"
+          #echo "CONFIG_OPLUS_FEATURE_SCHED_ASSIST=y" >> "$DEFCONFIG"
 
           # Filesystem Features
           echo "CONFIG_TMPFS_XATTR=y" >> "$DEFCONFIG"
