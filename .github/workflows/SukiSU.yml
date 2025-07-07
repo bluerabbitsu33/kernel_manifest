@@ -324,10 +324,8 @@ jobs:
           echo "CONFIG_SCHED_CLUSTER=y" >> "$DEFCONFIG"
 
           # Polly
-          #echo "CONFIG_LLVM_POLLY=n" >> "$DEFCONFIG"
-          #echo "CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=n" >> "$DEFCONFIG"
-          #echo "CONFIG_LLVM_POLLY=n" >> "$MSMCONFIG"
-          #echo "CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=n" >> "$MSMCONFIG"
+          echo "CONFIG_LLVM_POLLY=y" >> "$DEFCONFIG"
+          echo "CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=y" >> "$DEFCONFIG"
 
           # LRNG
           echo "CONFIG_LRNG=y" >> "$DEFCONFIG"
@@ -340,16 +338,6 @@ jobs:
           echo "CONFIG_LRNG_DRNG_ATOMIC=y" >> "$DEFCONFIG"
           echo "CONFIG_LRNG_SELFTEST=n" >> "$DEFCONFIG"
           echo "CONFIG_LRNG_RANDOM_IF=y" >> "$DEFCONFIG"
-          echo "CONFIG_LRNG=y" >> "$MSMCONFIG"
-          echo "CONFIG_RANDOM_DEFAULT_IMPL=n" >> "$MSMCONFIG"
-          echo "CONFIG_LRNG_IRQ=n" >> "$MSMCONFIG"
-          echo "CONFIG_LRNG_SCHED=n" >> "$MSMCONFIG"
-          echo "CONFIG_LRNG_CPU=y" >> "$MSMCONFIG"
-          echo "CONFIG_LRNG_JENT=n" >> "$MSMCONFIG"
-          echo "CONFIG_LRNG_CONTINUOUS_COMPRESSION_ENABLED=y" >> "$MSMCONFIG"
-          echo "CONFIG_LRNG_DRNG_ATOMIC=y" >> "$MSMCONFIG"
-          echo "CONFIG_LRNG_SELFTEST=n" >> "$MSMCONFIG"
-          echo "CONFIG_LRNG_RANDOM_IF=y" >> "$MSMCONFIG"
           
           
           # Filesystem Features
