@@ -510,7 +510,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: "Config"
-          path: ${{ env.WORKSPACE }}/kernel_platform/common/.config
+          path: ${{ env.WORKSPACE }}/kernel_platform/msm-kernel/.config
 
       - name: Zip AnyKernel3 # 创建 AnyKernel3 压缩文件
         run: |
