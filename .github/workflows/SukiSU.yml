@@ -332,9 +332,9 @@ jobs:
           # LRNG
           echo "CONFIG_LRNG=y" >> "$DEFCONFIG"
           echo "CONFIG_RNDOM_DEFAULT_IMPL=n" >> "$DEFCONFIG"
-          echo "CONFIG_LRNG_IRQ=y" >> "$DEFCONFIG"
+          echo "CONFIG_LRNG_IRQ=n" >> "$DEFCONFIG"
           echo "CONFIG_LRNG_SCHED=n" >> "$DEFCONFIG"
-          echo "CONFIG_LRNG_CPU=y" >> "$DEFCONFIG"
+          echo "CONFIG_LRNG_CPU=n" >> "$DEFCONFIG"
           echo "CONFIG_LRNG_JENT=n" >> "$DEFCONFIG"
           echo "CONFIG_LRNG_CONTINUOUS_COMPRESSION_ENABLED=y" >> "$DEFCONFIG"
           echo "CONFIG_LRNG_DRNG_ATOMIC=y" >> "$DEFCONFIG"
