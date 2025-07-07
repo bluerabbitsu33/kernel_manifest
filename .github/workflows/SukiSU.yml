@@ -327,6 +327,8 @@ jobs:
           echo "CONFIG_LLVM_POLLY=y" >> "$DEFCONFIG"
           echo "CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=y" >> "$DEFCONFIG"
 
+          echo " KBUILD_CFLAGS             += -Wno-error=return-type -Wno-error=unused-variable" >> "$PLATFORM/common/Makefile"
+
           # LRNG
           echo "CONFIG_LRNG=y" >> "$DEFCONFIG"
           echo "CONFIG_RANDOM_DEFAULT_IMPL=n" >> "$DEFCONFIG"
