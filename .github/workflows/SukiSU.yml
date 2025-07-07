@@ -112,6 +112,7 @@ jobs:
           PLATFORM_DIR="$WORKSPACE_DIR/kernel_platform"
           COMMON_DIR="$PLATFORM_DIR/common"
           DEFCONFIG="$COMMON_DIR/arch/arm64/configs/gki_defconfig"
+          MSMCONFIG="$PLATFORM_DIR/msm-kernel/arch/arm64/configs/gki_defconfig"
 
           # Set working DIR as an environment variable for future steps
           echo "WORKSPACE=$WORKSPACE_DIR" >> $GITHUB_ENV
@@ -323,6 +324,8 @@ jobs:
           # Polly
           echo "CONFIG_LLVM_POLLY=n" >> "$DEFCONFIG"
           echo "CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=n" >> "$DEFCONFIG"
+          echo "CONFIG_LLVM_POLLY=n" >> "$MSMCONFIG"
+          echo "CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=n" >> "$MSMCONFIG"
 
           # Filesystem Features
           echo "CONFIG_TMPFS_XATTR=y" >> "$DEFCONFIG"
