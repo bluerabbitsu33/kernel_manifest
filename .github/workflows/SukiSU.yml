@@ -119,6 +119,7 @@ jobs:
           echo "PLATFORM=$PLATFORM_DIR" >> $GITHUB_ENV
           echo "COMMON=$COMMON_DIR" >> $GITHUB_ENV
           echo "DEFCONFIG=$DEFCONFIG" >> $GITHUB_ENV
+          echo "MSMCONFIG=$MSMCONFIG" >> $GITHUB_ENV
 
       - name: Maximize build space # 最大化构建空间
         #uses: easimon/maximize-build-space@master
