@@ -235,9 +235,9 @@ jobs:
           cd "$COMMON"
           echo "正在给内核打 susfs 补丁..."
 
-          #if [[ "${{ env.KERNEL_VERSION }}" == "6.6" && "${{ inputs.FILE }}" != "oneplus_13t" && "${{ inputs.FILE }}" != "clo_oneplus_13t ]]; then
+          if [[ "${{ env.KERNEL_VERSION }}" == "6.6" && "${{ inputs.FILE }}" != "oneplus_13t" && "${{ inputs.FILE }}" != "clo_oneplus_13t ]]; then
             sed -i '/#include <trace\/hooks\/blk.h>/a #include <trace/hooks/fs.h>' ./fs/namespace.c
-          #fi
+          fi
 
           patch -p1 < "50_add_susfs_in_gki-${{ env.ANDROID_VERSION }}-${{ env.KERNEL_VERSION }}.patch" || { echo "应用 susfs 补丁失败"; exit 1; }
           echo "susfs 补丁应用完成"
