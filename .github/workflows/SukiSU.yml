@@ -328,16 +328,16 @@ jobs:
           #echo "CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=y" >> "$DEFCONFIG"
           
           # LRNG
-          echo "CONFIG_LRNG=y" >> "$DEFCONFIG"
-          echo "CONFIG_RANDOM_DEFAULT_IMPL=n" >> "$DEFCONFIG"
-          echo "CONFIG_LRNG_IRQ=n" >> "$DEFCONFIG"
-          echo "CONFIG_LRNG_SCHED=n" >> "$DEFCONFIG"
-          echo "CONFIG_LRNG_CPU=y" >> "$DEFCONFIG"
-          echo "CONFIG_LRNG_JENT=n" >> "$DEFCONFIG"
-          echo "CONFIG_LRNG_CONTINUOUS_COMPRESSION_ENABLED=y" >> "$DEFCONFIG"
-          echo "CONFIG_LRNG_DRNG_ATOMIC=y" >> "$DEFCONFIG"
-          echo "CONFIG_LRNG_SELFTEST=n" >> "$DEFCONFIG"
-          echo "CONFIG_LRNG_RANDOM_IF=y" >> "$DEFCONFIG"
+          #echo "CONFIG_LRNG=y" >> "$DEFCONFIG"
+          #echo "CONFIG_RANDOM_DEFAULT_IMPL=n" >> "$DEFCONFIG"
+          #echo "CONFIG_LRNG_IRQ=n" >> "$DEFCONFIG"
+          #echo "CONFIG_LRNG_SCHED=n" >> "$DEFCONFIG"
+          #echo "CONFIG_LRNG_CPU=y" >> "$DEFCONFIG"
+          #echo "CONFIG_LRNG_JENT=n" >> "$DEFCONFIG"
+          #echo "CONFIG_LRNG_CONTINUOUS_COMPRESSION_ENABLED=y" >> "$DEFCONFIG"
+          #echo "CONFIG_LRNG_DRNG_ATOMIC=y" >> "$DEFCONFIG"
+          #echo "CONFIG_LRNG_SELFTEST=n" >> "$DEFCONFIG"
+          #echo "CONFIG_LRNG_RANDOM_IF=y" >> "$DEFCONFIG"
           
           
           # Filesystem Features
