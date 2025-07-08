@@ -327,8 +327,8 @@ jobs:
           #echo "CONFIG_LLVM_POLLY=y" >> "$DEFCONFIG"
           #echo "CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=y" >> "$DEFCONFIG"
 
-          echo "CONFIG_MQ_IOSCHED_ADIOS=n" >> "$DEFCONFIG"
-          echo "CONFIG_MQ_IOSCHED_DEFAULT_ADIOS=n" >> "$DEFCONFIG"
+          #echo "CONFIG_MQ_IOSCHED_ADIOS=n" >> "$DEFCONFIG"
+          #echo "CONFIG_MQ_IOSCHED_DEFAULT_ADIOS=n" >> "$DEFCONFIG"
           
           # LRNG
           echo "CONFIG_LRNG=y" >> "$DEFCONFIG"
