@@ -324,8 +324,7 @@ jobs:
           echo "CONFIG_SCHED_CLUSTER=y" >> "$DEFCONFIG"
 
           # Polly
-          #echo "CONFIG_LLVM_POLLY=y" >> "$DEFCONFIG"
-          #echo "CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=y" >> "$DEFCONFIG"
+          echo "CONFIG_LLVM_POLLY=y" >> "$DEFCONFIG"
           
           # LRNG
           echo "CONFIG_LRNG=y" >> "$DEFCONFIG"
