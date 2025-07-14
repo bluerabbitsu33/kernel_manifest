@@ -325,7 +325,7 @@ jobs:
 
           # Polly
           #echo "CONFIG_POLLY_CLANG=y" >> "$DEFCONFIG"
-          echo "CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=y" >> "$DEFCONFIG"
+          #echo "CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=y" >> "$DEFCONFIG"
           
           # LRNG
           echo "CONFIG_LRNG=y" >> "$DEFCONFIG"
