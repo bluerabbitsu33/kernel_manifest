@@ -319,8 +319,7 @@ jobs:
 
           # Optimization
           echo "CONFIG_WQ_POWER_EFFICIENT_DEFAULT=y" >> "$DEFCONFIG"
-          echo "CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=n" >> "$DEFCONFIG"
-          echo "CONFIG_CC_OPTIMIZE_FOR_SIZE=y" >> "$DEFCONFIG"
+          echo "CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=y" >> "$DEFCONFIG"
           echo "CONFIG_DYNAMIC_FTRACE_WITH_CALL_OPS=y" >> "$DEFCONFIG"
           echo "CONFIG_SCHED_CLUSTER=y" >> "$DEFCONFIG"
 
