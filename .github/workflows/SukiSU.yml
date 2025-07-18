@@ -320,12 +320,12 @@ jobs:
 
           # Optimization
           echo "CONFIG_WQ_POWER_EFFICIENT_DEFAULT=y" >> "$DEFCONFIG"
-          echo "CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=y" >> "$DEFCONFIG"
+          #echo "CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=y" >> "$DEFCONFIG"
           echo "CONFIG_AUTOFDO_CLANG=y" >> "$DEFCONFIG"
           echo "CONFIG_SCHED_CLUSTER=y" >> "$DEFCONFIG"
 
           # Polly
-          #echo "CONFIG_POLLY_CLANG=y" >> "$DEFCONFIG"
+          echo "CONFIG_POLLY_CLANG=y" >> "$DEFCONFIG"
           echo "CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=y" >> "$DEFCONFIG"
           
           # LRNG
