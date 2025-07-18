@@ -385,7 +385,6 @@ jobs:
           # Remove unnecessary defconfig entries
           sed -i "s/CONFIG_PRINTK_TIME=y/CONFIG_PRINTK_TIME=n/" "$DEFCONFIG"
           sed -i "s/CONFIG_PRINTK_CALLER=y/CONFIG_PRINTK_CALLER=n/" "$DEFCONFIG"
-          sed -i "s/CONFIG_PRINTK=y/CONFIG_PRINTK=n/" "$DEFCONFIG"
           echo "CONFIG_TCP_CONG_CUBIC=n" >> "$DEFCONFIG"
           echo "CONFIG_MQ_IOSCHED_KYBER=n" >> "$DEFCONFIG"
 
