@@ -117,7 +117,12 @@ jobs:
           # Sync repo and apply patches
           $REPO --version
           $REPO --trace sync -c --no-clone-bundle --no-tags --optimized-fetch -j$(nproc --all) --fail-fast
-      
+          
+          git clone https://gitlab.com/kei-space/clang/r522817.git $CONFIG/kernel_platform/prebuilts/clang/host/linux-x86/clang-r522817
+          
+          rm -rf "$CONFIG/kernel_platform/prebuilts/clang/host/linux-x86/clang-r510928"
+          
+          sed -i 's/r510928/r522817/g' $CONFIG/kernel_platform/common/build.config.constants
       - name: Add KernelSU Next
         run: |
           echo "Changing to configuration directory: $CONFIG..."
@@ -217,19 +222,18 @@ jobs:
           echo "CONFIG_KSU_SUSFS_TRY_UMOUNT=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_KSU_SUSFS_AUTO_ADD_TRY_UMOUNT_FOR_BIND_MOUNT=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_KSU_SUSFS_SPOOF_UNAME=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_ENABLE_LOG=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_SUSFS_ENABLE_LOG=n" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_KSU_SUSFS_HIDE_KSU_SUSFS_SYMBOLS=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_KSU_SUSFS_OPEN_REDIRECT=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_KSU_SUSFS_SUS_SU=n" >> ./common/arch/arm64/configs/gki_defconfig
           
-          # Add additional tmpfs config setting
-          echo "CONFIG_TMPFS_XATTR=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_TMPFS_POSIX_ACL=y" >> ./common/arch/arm64/configs/gki_defconfig
-          
           # Add zram config setting
           echo "CONFIG_ZRAM_DEF_COMP_LZORLE=n" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_ZRAM_DEF_COMP_LZO=n" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_ZRAM_DEF_COMP_ZSTD=n" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_ZRAM_DEF_COMP_LZ4HC=n" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_ZRAM_DEF_COMP_842=n" >> ./common/arch/arm64/configs/gki_defconfig
           echo "CONFIG_ZRAM_DEF_COMP_LZ4=y" >> ./common/arch/arm64/configs/gki_defconfig
           echo 'CONFIG_ZRAM_DEF_COMP="lz4"' >> ./common/arch/arm64/configs/gki_defconfig
 
@@ -238,11 +242,36 @@ jobs:
           
           # Wakelock
           echo "CONFIG_BOEFFLA_WL_BLOCKER=y" >> ./common/arch/arm64/configs/gki_defconfig
+          sed -i 's/CONFIG_PM_WAKELOCKS_LIMIT=0/CONFIG_PM_WAKELOCKS_LIMIT=10/' ./common/arch/arm64/configs/gki_defconfig
+          sed -i 's/# CONFIG_PM_WAKELOCKS_GC is not set/CONFIG_PM_WAKELOCKS_GC=y/' ./common/arch/arm64/configs/gki_defconfig
+          sed -i 's/placeholder/gauge;sscrpcd:2310;b0000000.qcom,cnss-peach;wired wakelock;cne_wl_;radio-data-interface;fastrpc-secure;eventpoll;event0;event8;event2;event3;9-0028;amd_lock;lux_aod_lock;a600000.ssusb;qcom_rx_wakelock;wlan;wlan_wow_wl;NETLINK;IPA_WS;\[timerfd\];wlan_ipa;wlan_pno_wl;DIAG_WS;qcom_sap_wakelock;pmo_wow_wl;898000.qcom,qup_uart;rmnet_ctl;hal_bluetooth_lock;SensorsHAL_WAKEUP;ena600000.ssusb;gesture_prox_lock;gnss_hal;prox_lock;IPA_CLIENT_APPS_LAN_CONS;IPA_CLIENT_APPS_WAN_LOW_LAT_CONS;RMNET_SHS;IPA_CLIENT_APPS_WAN_COAL_CONS;oplus_shaking_lock;8-0028;phone_prox_lock;qrtr_ws;rmnet_ipa%d;wlan_ap_assoc_lost_wl;radio-data-interface;tftp_server_wakelock;pedometer_minute_lock;wlan_roam_ho_wl;10-0028;vdev_start;event8;eventpoll/' "$CONFIG/kernel_platform/common/drivers/base/power/boeffla_wl_blocker.h" || true
 
-          # Optimisation
+          # Optimization
           echo "CONFIG_WQ_POWER_EFFICIENT_DEFAULT=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_DYNAMIC_FTRACE_WITH_CALL_OPS=y" >> ./common/arch/arm64/configs/gki_defconfig
+          #echo "CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_AUTOFDO_CLANG=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_SCHED_CLUSTER=y" >> ./common/arch/arm64/configs/gki_defconfig
+
+          # Polly
+          #echo "CONFIG_LLVM_POLLY=y" >> "$DEFCONFIG"
+          echo "CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=y" >> "$DEFCONFIG"
+
+          # LRNG
+          echo "CONFIG_LRNG=y" >> "$DEFCONFIG"
+          echo "CONFIG_RANDOM_DEFAULT_IMPL=n" >> "$DEFCONFIG"
+          echo "CONFIG_LRNG_IRQ=n" >> "$DEFCONFIG"
+          echo "CONFIG_LRNG_SCHED=n" >> "$DEFCONFIG"
+          echo "CONFIG_LRNG_CPU=y" >> "$DEFCONFIG"
+          echo "CONFIG_LRNG_JENT=n" >> "$DEFCONFIG"
+          echo "CONFIG_LRNG_CONTINUOUS_COMPRESSION_ENABLED=y" >> "$DEFCONFIG"
+          echo "CONFIG_LRNG_DRNG_ATOMIC=y" >> "$DEFCONFIG"
+          echo "CONFIG_LRNG_SELFTEST=n" >> "$DEFCONFIG"
+          echo "CONFIG_LRNG_RANDOM_IF=y" >> "$DEFCONFIG"
+          
+          
+          # Filesystem Features
+          echo "CONFIG_TMPFS_XATTR=y" >> "$DEFCONFIG"
+          echo "CONFIG_TMPFS_POSIX_ACL=y" >> "$DEFCONFIG"
 
           # Add tethering config setting
           echo "CONFIG_IP_NF_TARGET_TTL=y" >> ./common/arch/arm64/configs/gki_defconfig
@@ -250,18 +279,12 @@ jobs:
           echo "CONFIG_IP6_NF_MATCH_HL=y" >> ./common/arch/arm64/configs/gki_defconfig
 
           # Add bbr and fq config setting
-          echo "CONFIG_TCP_CONG_ADVANCED=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_TCP_CONG_BBR=y" >> ./common/arch/arm64/configs/gki_defconfig
-          #echo "CONFIG_DEFAULT_CUBIC=n" >> ./common/arch/arm64/configs/gki_defconfig
-          #echo "CONFIG_NET_SCH_DEFAULT=y" >> ./common/arch/arm64/configs/gki_defconfig
-          #echo "CONFIG_DEFAULT_FQ=y" >> ./common/arch/arm64/configs/gki_defconfig
-          #echo 'CONFIG_DEFAULT_NET_SCH="fq"' >> ./common/arch/arm64/configs/gki_defconfig
-          #echo "CONFIG_NET_SCH_HTB=n" >> ./common/arch/arm64/configs/gki_defconfig
-          #echo 'CONFIG_DEFAULT_TCP_CONG="bbr"' >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_TCP_CONG_BIC=n" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_TCP_CONG_WESTWOOD=n" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_TCP_CONG_HTCP=n" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_DEFAULT_BBR=y" >>  ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_TCP_CONG_ADVANCED=y" >> "$DEFCONFIG"
+          echo "CONFIG_TCP_CONG_BBR=y" >> "$DEFCONFIG"
+          echo "CONFIG_TCP_CONG_BIC=n" >> "$DEFCONFIG"
+          echo "CONFIG_TCP_CONG_WESTWOOD=n" >> "$DEFCONFIG"
+          echo "CONFIG_TCP_CONG_HTCP=n" >> "$DEFCONFIG"
+          echo "CONFIG_DEFAULT_BBR=y" >>  "$DEFCONFIG"
           
           # Add rcu config setting
           echo "CONFIG_RCU_TRACE=n" >> ./common/arch/arm64/configs/gki_defconfig
@@ -271,6 +294,8 @@ jobs:
           # Remove unnecessary defconfig entries
           sed -i "s/CONFIG_PRINTK_TIME=y/CONFIG_PRINTK_TIME=n/" ./common/arch/arm64/configs/gki_defconfig
           sed -i "s/CONFIG_PRINTK_CALLER=y/CONFIG_PRINTK_CALLER=n/" ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_TCP_CONG_CUBIC=n" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_MQ_IOSCHED_KYBER=n" >> ./common/arch/arm64/configs/gki_defconfig
 
           # Optimize networking
           cd "./common/net/ipv4"
