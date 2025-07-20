@@ -107,6 +107,7 @@ jobs:
         run: |
           echo "Creating folder for configuration: $CONFIG..."
           mkdir -p "$CONFIG"
+          echo "CONFIG=$(realpath $CONFIG)" >> $GITHUB_ENV
           cd "$CONFIG"
           
           # Initialize and sync kernel source
@@ -120,9 +121,9 @@ jobs:
           
           git clone https://gitlab.com/kei-space/clang/r522817.git $CONFIG/kernel_platform/prebuilts/clang/host/linux-x86/clang-r522817
           
-          #rm -rf "$CONFIG/kernel_platform/prebuilts/clang/host/linux-x86/clang-r510928"
+          rm -rf "$CONFIG/kernel_platform/prebuilts/clang/host/linux-x86/clang-r510928"
           
-          #sed -i 's/r510928/r522817/g' "$CONFIG/kernel_platform/common/build.config.constants"
+          sed -i 's/r510928/r522817/g' "$CONFIG/kernel_platform/common/build.config.constants"
       - name: Add KernelSU Next
         run: |
           echo "Changing to configuration directory: $CONFIG..."
