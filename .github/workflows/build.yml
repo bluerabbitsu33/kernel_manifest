@@ -84,7 +84,7 @@ jobs:
           mkdir -p "$CONFIG"
           
           # Set CONFIG as an environment variable for future steps
-          echo "CONFIG=$(realpath$CONFIG)" >> $GITHUB_ENV
+          echo "CONFIG=$(realpath $CONFIG)" >> $GITHUB_ENV
           
           echo "CONFIG set to: $CONFIG"
 
