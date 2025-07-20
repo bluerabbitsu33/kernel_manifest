@@ -122,7 +122,7 @@ jobs:
           
           rm -rf "$CONFIG/kernel_platform/prebuilts/clang/host/linux-x86/clang-r510928"
           
-          sed -i 's/r510928/r522817/g' $CONFIG/kernel_platform/common/build.config.constants
+          sed -i 's/r510928/r522817/g' "$CONFIG/kernel_platform/common/build.config.constants"
       - name: Add KernelSU Next
         run: |
           echo "Changing to configuration directory: $CONFIG..."
