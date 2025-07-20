@@ -108,6 +108,7 @@ jobs:
           echo "Creating folder for configuration: $CONFIG..."
           mkdir -p "$CONFIG"
           echo "CONFIG=$(realpath $CONFIG)" >> $GITHUB_ENV
+          export CONFIG=$(realpath $CONFIG)
           cd "$CONFIG"
           
           # Initialize and sync kernel source
