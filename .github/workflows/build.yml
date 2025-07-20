@@ -81,9 +81,10 @@ jobs:
       - name: Set CONFIG Environment Variable
         run: |
           CONFIG="${{ inputs.model }}"
+          mkdir -p "$CONFIG"
           
           # Set CONFIG as an environment variable for future steps
-          echo "CONFIG=$CONFIG" >> $GITHUB_ENV
+          echo "CONFIG=$(realpath$CONFIG)" >> $GITHUB_ENV
           
           echo "CONFIG set to: $CONFIG"
 
@@ -106,9 +107,6 @@ jobs:
       - name: Initialize and Sync Kernel Source
         run: |
           echo "Creating folder for configuration: $CONFIG..."
-          mkdir -p "$CONFIG"
-          echo "CONFIG=$(realpath $CONFIG)" >> $GITHUB_ENV
-          export CONFIG=$(realpath $CONFIG)
           cd "$CONFIG"
           
           # Initialize and sync kernel source
