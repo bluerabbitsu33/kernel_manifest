@@ -388,8 +388,15 @@ jobs:
             # cp ./out/dist/vendor_dlkm.img ../AnyKernel3/
             # cp ./out/dist/vendor_boot.img ../AnyKernel3/
           fi
-
+          
+      - name: Get formatted date
+        id: formatted_date
+        run: |
+          DATE=$(date +'%y%m%d-%H%M')
+          echo "formatted=$DATE" >> $GITHUB_OUTPUT
+          
       - name: Create ZIP Files for Different Formats
+        if : false
         run: |
           echo "Navigating to AnyKernel3 directory..."
           cd ./AnyKernel3
@@ -407,5 +414,5 @@ jobs:
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: kernel-${{ inputs.model }}
-          path: ${{ inputs.model }}_${{ inputs.android_version }}_${{ inputs.kernel_version }}_Next_SUSFS_AnyKernel3.zip
+          name: "${{ inputs.manifest }}-KSUN-${{ env.KSUVER }}-${{ steps.formatted_date.outputs.formatted }}"
+          path: ./AnyKernel3/*
