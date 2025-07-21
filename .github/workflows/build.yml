@@ -202,7 +202,7 @@ jobs:
           esac
           patch -p1 --forward < ksun_susfs_latest.patch || true
 
-                    # Change to common directory and apply SUSFS patch
+          # Change to common directory and apply SUSFS patch
           cd ../common
           
           if [ "${{ inputs.android_version }}" = "android15" ] && [ "${{ inputs.kernel_version }}" = "6.6" ]; then
@@ -223,32 +223,7 @@ jobs:
           else
             echo "Kernel >= $MIN_VERSION, skipping ptrace patch"
           fi
-
-          # Determine base version based on branch
-          if [ "${{ inputs.ksun_branch }}" == "stable" ]; then
-            BASE_VERSION=10200
-          elif [ "${{ inputs.ksun_branch }}" == "next" ]; then
-            BASE_VERSION=10200
-          elif [ "${{ inputs.ksun_branch }}" == "next-susfs" ]; then
-            BASE_VERSION=10198
-          elif [ "${{ inputs.ksun_branch }}" == "next-susfs-dev" ]; then
-            BASE_VERSION=10198
-          else
-            BASE_VERSION=10200
-          fi
           
-          cd ./kernel
-          KSU_VERSION=$(expr $(/usr/bin/git rev-list --count HEAD) "+" $BASE_VERSION)
-          echo "KSUVER=$KSU_VERSION" >> $GITHUB_ENV
-          sed -i "s/DKSU_VERSION=11998/DKSU_VERSION=${KSU_VERSION}/" Makefile
-          
-          # Change to common directory and apply SUSFS patch
-          cd ../../common
-          if [ "${{ inputs.soc }}" == "sun" ]; then
-            sed -i '/#include <trace\/hooks\/blk.h>/a #include <trace/hooks/fs.h>' ./fs/namespace.c
-          fi
-          patch -p1 < 50_add_susfs_in_gki-${{ inputs.android_version }}-${{ inputs.kernel_version }}.patch || true
-
       - name: Apply KSUN Hooks
         run: |
           echo "Changing to configuration directory: $CONFIG..."
