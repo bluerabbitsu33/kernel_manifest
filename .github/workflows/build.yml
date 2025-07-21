@@ -268,7 +268,6 @@ jobs:
           echo "CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y" >> "$DEFCONFIG"
           echo "CONFIG_KSU_SUSFS_OPEN_REDIRECT=y" >> "$DEFCONFIG"
           echo "CONFIG_KSU_SUSFS_SUS_SU=n" >> "$DEFCONFIG"
-          echo "CONFIG_KSU_MANUAL_HOOK=y" >> "$DEFCONFIG"
           
           # Add zram config setting
           echo "CONFIG_ZRAM_DEF_COMP_LZORLE=n" >> "$DEFCONFIG"
