@@ -453,5 +453,5 @@ jobs:
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: "${{ inputs.manifest }}-KSUN-${{ env.KSUVER }}-${{ steps.formatted_date.outputs.formatted }}"
+          name: "KSUN-AnyKernel3-${{ inputs.manifest }}-${{ env.KSUVER }}-${{ steps.formatted_date.outputs.formatted }}"
           path: ./AnyKernel3/*
