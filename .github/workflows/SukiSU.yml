@@ -496,10 +496,11 @@ jobs:
       - name: Upload AnyKernel3 # 上传 AnyKernel3
         uses: actions/upload-artifact@v4
         with:
-          name: "AnyKernel3-${{ inputs.FILE }}-SukiSU-${{ env.KSUVER }}-${{ steps.formatted_date.outputs.formatted }}"
+          name: "SukiSU-AnyKernel3-${{ inputs.FILE }}-${{ env.KSUVER }}-${{ steps.formatted_date.outputs.formatted }}"
           path: ${{ env.WORKSPACE }}/AnyKernel3/*
 
       - name: Upload Image # 上传 Image
+        if: false
         uses: actions/upload-artifact@v4
         with:
           name: "Image-${{ inputs.FILE }}-SukiSU-${{ env.KSUVER }}-${{ steps.formatted_date.outputs.formatted }}"
