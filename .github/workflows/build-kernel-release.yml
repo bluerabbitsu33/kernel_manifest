@@ -1,4 +1,4 @@
-name: Build and Oplus kernel with KSUN
+name: Build Oplus kernel with KSUN
 
 permissions:
   contents: write
