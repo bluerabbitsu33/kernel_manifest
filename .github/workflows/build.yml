@@ -304,8 +304,8 @@ jobs:
           echo "CONFIG_LRNG_SCHED=n" >> "$DEFCONFIG"
           echo "CONFIG_LRNG_CPU=y" >> "$DEFCONFIG"
           echo "CONFIG_LRNG_JENT=n" >> "$DEFCONFIG"
-          echo "CONFIG_LRNG_CONTINUOUS_COMPRESSION_ENABLED=y" >> "$DEFCONFIG"
-          echo "CONFIG_LRNG_DRNG_ATOMIC=y" >> "$DEFCONFIG"
+          echo "CONFIG_LRNG_CONTINUOUS_COMPRESSION_ENABLED=n" >> "$DEFCONFIG"
+          echo "CONFIG_LRNG_DRNG_ATOMIC=n" >> "$DEFCONFIG"
           echo "CONFIG_LRNG_SELFTEST=n" >> "$DEFCONFIG"
           echo "CONFIG_LRNG_RANDOM_IF=y" >> "$DEFCONFIG"
           
