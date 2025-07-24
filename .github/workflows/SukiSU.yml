@@ -400,7 +400,7 @@ jobs:
       - name: Build kernel # 构建内核
         run: |
           sudo sh -c 'sync; echo 3 > /proc/sys/vm/drop_caches'
-          cd "$WORKSPACE"
+          cd "$PLATFORM"
 
           BUILD_TYPE="gki"
           BAZEL_ARGS=(--jobs=$(nproc --all) --lto=thin)
@@ -425,14 +425,14 @@ jobs:
           trap "kill $MONITOR_PID" EXIT
 
           echo "开始构建内核，构建类型：$BUILD_TYPE"
-          if [ -f ./kernel_platform/build_with_bazel.py ]; then
+          if [ -f ./build_with_bazel.py ]; then
           echo "1st build"
-            #./kernel_platform/oplus/bazel/oplus_modules_variant.sh ${{ inputs.Chipset }} "$BUILD_TYPE" ""
-            #./kernel_platform/build_with_bazel.py -t ${{ inputs.Chipset }} $BUILD_TYPE "${BAZEL_ARGS[@]}" -o "$(pwd)/out"
-            ./kernel_platform/tools/bazel run --config=fast --config=stamp --lto=thin --verbose_failures //common:kernel_aarch64_dist -- --dist_dir=dist
+            #./oplus/bazel/oplus_modules_variant.sh ${{ inputs.Chipset }} "$BUILD_TYPE" ""
+            #./build_with_bazel.py -t ${{ inputs.Chipset }} $BUILD_TYPE "${BAZEL_ARGS[@]}" -o "$(pwd)/out"
+            ./tools/bazel run --config=fast --config=stamp --lto=thin --verbose_failures //common:kernel_aarch64_dist -- --dist_dir=dist
           else
             echo "2nd build" #original
-            LTO=thin ./kernel_platform/oplus/build/oplus_build_kernel.sh ${{ inputs.Chipset }} "$BUILD_TYPE"
+            LTO=thin ./oplus/build/oplus_build_kernel.sh ${{ inputs.Chipset }} "$BUILD_TYPE"
           fi
 
       - name: Make AnyKernel3 # 制作 AnyKernel3
