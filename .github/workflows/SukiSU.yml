@@ -444,6 +444,7 @@ jobs:
           git clone https://github.com/epicmann24/AnyKernel3.git -b gki-2.0 --depth=1 && rm -rf ./AnyKernel3/.git
           
           # Copy kernel
+          echo "copy kernel"
           #IMAGE_PATH=$(find "$PLATFORM/../out" -name "Image")
           IMAGE_PATH=$(find "$PLATFORM/dist/" -name "Image")
           if [ -n "$IMAGE_PATH" ]; then
@@ -470,12 +471,15 @@ jobs:
           fi
 
           # Copy boot.img
-          BOOTIMG_PATH=$(find "$PLATFORM/out" -name "boot.img")
+          if false; then
+          echo "copy boot.img"
+          BOOTIMG_PATH=$(find "$PLATFORM/dist/" -name "boot.img")
           if [ -n "$BOOTIMG_PATH" ]; then
             cp "$BOOTIMG_PATH" "$WORKSPACE/image_output/boot.img"
             echo "boot.img 文件已找到:$BOOTIMG_PATH"
           else
             echo "boot.img 文件未找到，已跳过复制"
+          fi
           fi
 
       - name: Apply patch_linux and replace Image # 应用 patch_linux 并替换 Image
