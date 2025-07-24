@@ -427,8 +427,9 @@ jobs:
           echo "开始构建内核，构建类型：$BUILD_TYPE"
           if [ -f ./kernel_platform/build_with_bazel.py ]; then
           echo "1st build"
-            ./kernel_platform/oplus/bazel/oplus_modules_variant.sh ${{ inputs.Chipset }} "$BUILD_TYPE" ""
-            ./kernel_platform/build_with_bazel.py -t ${{ inputs.Chipset }} $BUILD_TYPE "${BAZEL_ARGS[@]}" -o "$(pwd)/out"
+            #./kernel_platform/oplus/bazel/oplus_modules_variant.sh ${{ inputs.Chipset }} "$BUILD_TYPE" ""
+            #./kernel_platform/build_with_bazel.py -t ${{ inputs.Chipset }} $BUILD_TYPE "${BAZEL_ARGS[@]}" -o "$(pwd)/out"
+            ./kernel_platform/tools/bazel run --config=fast --config=stamp --lto=thin --verbose_failures //common:kernel_aarch64_dist -- --dist_dir=dist
           else
             echo "2nd build" #original
             LTO=thin ./kernel_platform/oplus/build/oplus_build_kernel.sh ${{ inputs.Chipset }} "$BUILD_TYPE"
@@ -443,7 +444,8 @@ jobs:
           git clone https://github.com/epicmann24/AnyKernel3.git -b gki-2.0 --depth=1 && rm -rf ./AnyKernel3/.git
           
           # Copy kernel
-          IMAGE_PATH=$(find "$PLATFORM/../out" -name "Image")
+          #IMAGE_PATH=$(find "$PLATFORM/../out" -name "Image")
+          IMAGE_PATH=$(find "$PLATFORM/dist/" -name "Image")
           if [ -n "$IMAGE_PATH" ]; then
             cp "$IMAGE_PATH" "$WORKSPACE/AnyKernel3/Image"
             cp "$IMAGE_PATH" "$WORKSPACE/image_output/Image"
