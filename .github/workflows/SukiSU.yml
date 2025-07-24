@@ -267,8 +267,6 @@ jobs:
         run: |
           cd "$WORKSPACE"
 
-          sed -i 's/O2/O3/' "$PLATFORM/common/Makefile"
-
           # Remove protected exports and strings
           rm $PLATFORM/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
           rm $PLATFORM/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
