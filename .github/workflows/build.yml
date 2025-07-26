@@ -118,11 +118,11 @@ jobs:
           $REPO --version
           $REPO --trace sync -c --no-clone-bundle --no-tags --optimized-fetch -j$(nproc --all) --fail-fast
           
-          git clone https://gitlab.com/kei-space/clang/r522817.git $CONFIG/kernel_platform/prebuilts/clang/host/linux-x86/clang-r522817
+          git clone https://gitlab.com/kei-space/clang/r536225.git $CONFIG/kernel_platform/prebuilts/clang/host/linux-x86/clang-r536225
           
           rm -rf "$CONFIG/kernel_platform/prebuilts/clang/host/linux-x86/clang-r510928"
           
-          sed -i 's/r510928/r522817/g' "$CONFIG/kernel_platform/common/build.config.constants"
+          sed -i 's/r510928/r536225/g' "$CONFIG/kernel_platform/common/build.config.constants"
 
           echo "DEFCONFIG=$CONFIG/kernel_platform/common/arch/arm64/configs/gki_defconfig" >> $GITHUB_ENV
       - name: Add KernelSU Next
