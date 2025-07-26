@@ -407,7 +407,7 @@ jobs:
           MONITOR_PID=$!
           trap "kill $MONITOR_PID" EXIT
           
-          if [ -f ./kernel_platform/build_with_bazel.py ]; then
+          if [ -f ./build_with_bazel.py ]; then
             #./oplus/bazel/oplus_modules_variant.sh ${{ inputs.soc }} "$BUILD_TYPE" ""
             #./build_with_bazel.py -t ${{ inputs.soc }} $BUILD_TYPE "${BAZEL_ARGS[@]}" -o "$(pwd)/out"
             ./tools/bazel run --config=fast --config=stamp --lto=thin --verbose_failures //common:kernel_aarch64_dist -- --dist_dir=dist
