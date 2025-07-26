@@ -376,14 +376,14 @@ jobs:
       - name: Build the Kernel
         run: |
           echo "Changing to configuration directory: $CONFIG..."
-          cd "$CONFIG"
+          cd "$CONFIG/kernel_platform"
           
           echo "Building the kernel..."
           # Clear Cache
           sudo sh -c 'sync; echo 3 > /proc/sys/vm/drop_caches'
           
-          rm ./kernel_platform/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
-          rm ./kernel_platform/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
+          rm ./common/android/abi_gki_protected_exports_* || echo "No protected exports!"
+          rm ./msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
           
           BUILD_TYPE="gki"
           BAZEL_ARGS=(--jobs=$(nproc --all) --lto=thin)
@@ -408,11 +408,11 @@ jobs:
           trap "kill $MONITOR_PID" EXIT
           
           if [ -f ./kernel_platform/build_with_bazel.py ]; then
-            #./kernel_platform/oplus/bazel/oplus_modules_variant.sh ${{ inputs.soc }} "$BUILD_TYPE" ""
-            #./kernel_platform/build_with_bazel.py -t ${{ inputs.soc }} $BUILD_TYPE "${BAZEL_ARGS[@]}" -o "$(pwd)/out"
-            ./kernel_platform/tools/bazel run --config=fast --config=stamp --lto=thin --verbose_failures //common:kernel_aarch64_dist -- --dist_dir=dist
+            #./oplus/bazel/oplus_modules_variant.sh ${{ inputs.soc }} "$BUILD_TYPE" ""
+            #./build_with_bazel.py -t ${{ inputs.soc }} $BUILD_TYPE "${BAZEL_ARGS[@]}" -o "$(pwd)/out"
+            ./tools/bazel run --config=fast --config=stamp --lto=thin --verbose_failures //common:kernel_aarch64_dist -- --dist_dir=dist
           else
-            LTO=thin ./kernel_platform/oplus/build/oplus_build_kernel.sh ${{ inputs.soc }} "$BUILD_TYPE"
+            LTO=thin ./oplus/build/oplus_build_kernel.sh ${{ inputs.soc }} "$BUILD_TYPE"
           fi
 
       - name: Copy Images
