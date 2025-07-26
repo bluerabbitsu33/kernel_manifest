@@ -421,7 +421,8 @@ jobs:
           cd "$CONFIG"
           
           echo "Copying Image"
-          cp ./out/dist/Image ../AnyKernel3/Image
+          IMAGE_PATH=$(find "$CONFIG/kernel_platform/dist/" -name "Image")
+          cp "$IMAGE_PATH" ../AnyKernel3/Image
           if [ "${{ inputs.model }}" == "OPAce5Pro" ]; then
             cp ./out/dist/dtbo.img ../AnyKernel3/
             cp ./out/dist/system_dlkm.erofs.img ../AnyKernel3/system_dlkm.img
