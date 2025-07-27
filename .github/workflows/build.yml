@@ -349,6 +349,9 @@ jobs:
         run: |
           echo "Changing to configuration directory: $CONFIG..."
           cd "$CONFIG/kernel_platform"
+
+          touch ".bazelrc"
+          echo "common --copt=-mcpu=oryon-1" > ".bazelrc"
           
           echo "Running sed commands..."
           
