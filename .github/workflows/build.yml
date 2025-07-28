@@ -246,8 +246,6 @@ jobs:
           cd "$CONFIG/kernel_platform"
           
           echo "Adding configuration settings to gki_defconfig..."
-
-          sed -i 's/CONFIG_CFI_CLANG=y/CONFIG_CFI_CLANG=n/' "$DEFCONFIG"
           
           # Add KSU configuration settings
           echo "CONFIG_KSU=y" >> "$DEFCONFIG"
