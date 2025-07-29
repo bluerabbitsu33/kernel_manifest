@@ -147,6 +147,9 @@ jobs:
           cd "$CONFIG/kernel_platform"
           
           echo "Applying SUSFS patches..."
+
+          sed -i 's/CONFIG_PANIC_ON_OOPS=y/CONFIG_PANIC_ON_OOPS=n/' "$DEFCONFIG"
+          sed -i 's/CONFIG_PANIC_TIMEOUT=-1/CONFIG_PANIC_TIMEOUT=0/' "$DEFCONFIG"
           
           # Copy SUSFS patches
           cp ../../susfs4ksu/kernel_patches/50_add_susfs_in_gki-${{ inputs.android_version }}-${{ inputs.kernel_version }}.patch ./common/
