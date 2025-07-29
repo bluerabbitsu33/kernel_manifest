@@ -246,6 +246,8 @@ jobs:
           cd "$CONFIG/kernel_platform"
           
           echo "Adding configuration settings to gki_defconfig..."
+
+          echo "CONFIG_RELR=n" >> "$DEFCONFIG"
           
           # Add KSU configuration settings
           echo "CONFIG_KSU=y" >> "$DEFCONFIG"
