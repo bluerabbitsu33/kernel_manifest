@@ -148,7 +148,7 @@ jobs:
           
           echo "Applying SUSFS patches..."
 
-          echo "CONFIG_ARCH_ORYON=n" >> "$DEFCONFIG"
+          echo "CONFIG_RELR=n" >> "$DEFCONFIG"
           sed -i 's/CONFIG_PANIC_ON_OOPS=y/CONFIG_PANIC_ON_OOPS=n/' "$DEFCONFIG"
           sed -i 's/CONFIG_PANIC_TIMEOUT=-1/CONFIG_PANIC_TIMEOUT=0/' "$DEFCONFIG"
           
