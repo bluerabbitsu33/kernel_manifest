@@ -118,11 +118,11 @@ jobs:
           $REPO --version
           $REPO --trace sync -c --no-clone-bundle --no-tags --optimized-fetch -j$(nproc --all) --fail-fast
           
-          git clone https://gitlab.com/kei-space/clang/r547379.git $CONFIG/kernel_platform/prebuilts/clang/host/linux-x86/clang-r547379
+          git clone https://gitlab.com/kei-space/clang/r536225.git $CONFIG/kernel_platform/prebuilts/clang/host/linux-x86/clang-r536225
           
           rm -rf "$CONFIG/kernel_platform/prebuilts/clang/host/linux-x86/clang-r510928"
           
-          sed -i 's/r510928/r547379/g' "$CONFIG/kernel_platform/common/build.config.constants"
+          sed -i 's/r510928/r536225/g' "$CONFIG/kernel_platform/common/build.config.constants"
 
           echo "DEFCONFIG=$CONFIG/kernel_platform/common/arch/arm64/configs/gki_defconfig" >> $GITHUB_ENV
       - name: Add KernelSU Next
@@ -147,10 +147,6 @@ jobs:
           cd "$CONFIG/kernel_platform"
           
           echo "Applying SUSFS patches..."
-
-          echo "CONFIG_RELR=n" >> "$DEFCONFIG"
-          sed -i 's/CONFIG_PANIC_ON_OOPS=y/CONFIG_PANIC_ON_OOPS=n/' "$DEFCONFIG"
-          sed -i 's/CONFIG_PANIC_TIMEOUT=-1/CONFIG_PANIC_TIMEOUT=0/' "$DEFCONFIG"
           
           # Copy SUSFS patches
           cp ../../susfs4ksu/kernel_patches/50_add_susfs_in_gki-${{ inputs.android_version }}-${{ inputs.kernel_version }}.patch ./common/
