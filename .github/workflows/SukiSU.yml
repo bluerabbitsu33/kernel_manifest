@@ -402,7 +402,7 @@ jobs:
           sed -i 's/net->ipv4.sysctl_tcp_pacing_ss_ratio = 200;/net->ipv4.sysctl_tcp_pacing_ss_ratio = 150;/' tcp_ipv4.c
           sed -i 's/net->ipv4.sysctl_tcp_pacing_ca_ratio = 120;/net->ipv4.sysctl_tcp_pacing_ca_ratio = 110;/' tcp_ipv4.c
 
-          sed -i 's/-flto=thin/-flto=full/'
+          sed -i 's/-flto=thin/-flto=full/' "$COMMON/Makefile"
           
           git status
           cat "$DEFCONFIG"
