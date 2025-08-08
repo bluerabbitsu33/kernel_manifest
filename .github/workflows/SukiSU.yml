@@ -15,7 +15,7 @@ on:
         options:
           - oneplus_13t
           - clo_oneplus_13t
-        default: oneplus_13t
+        default: clo_oneplus_13t
 
       Chipset:
         description: "开发板代号 // Chipset codename"
