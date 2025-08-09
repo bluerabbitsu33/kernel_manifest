@@ -191,6 +191,13 @@ jobs:
           
           if [[ "${{ inputs.FILE }}" == "clo_oneplus_13t" ]]; then
             clangver="r536225"
+            
+            # Use newer profiles
+            rm "$PLATFORM/prebuilts/clang/host/linux-x86/pgo-r522817.tar.xz"
+            rm "$PLATFORM/prebuilts/clang/host/linux-x86/bolt-r522817.tar.xz"
+
+            wget https://github.com/epicmann24/kernel_manifest/raw/refs/heads/oneplus/sm8750/pgo.tar.xz -O "$PLATFORM/prebuilts/clang/host/linux-x86/pgo-$clangver.tar.xz"
+            wget https://github.com/epicmann24/kernel_manifest/raw/refs/heads/oneplus/sm8750/bolt.tar.xz -O "$PLATFORM/prebuilts/clang/host/linux-x86/bolt-$clangver.tar.xz"
           fi
 
           git clone https://gitlab.com/kei-space/clang/$clangver.git $PLATFORM/prebuilts/clang/host/linux-x86/clang-$clangver
@@ -401,8 +408,6 @@ jobs:
           #sed -i '/\.procname[[:space:]]*=[[:space:]]*"tcp_ecn"/, /^[[:space:]]*\}/ s/SYSCTL_TWO/SYSCTL_ONE/' sysctl_net_ipv4.c
           sed -i 's/net->ipv4.sysctl_tcp_pacing_ss_ratio = 200;/net->ipv4.sysctl_tcp_pacing_ss_ratio = 150;/' tcp_ipv4.c
           sed -i 's/net->ipv4.sysctl_tcp_pacing_ca_ratio = 120;/net->ipv4.sysctl_tcp_pacing_ca_ratio = 110;/' tcp_ipv4.c
-
-          #sed -i 's/-flto=thin/-flto=full/' "$COMMON/Makefile"
           
           git status
           cat "$DEFCONFIG"
