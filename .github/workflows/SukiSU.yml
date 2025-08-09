@@ -193,11 +193,11 @@ jobs:
             clangver="r536225"
             
             # Use newer profiles
-            rm "$PLATFORM/prebuilts/clang/host/linux-x86/Profiles/pgo-r522817.tar.xz"
-            rm "$PLATFORM/prebuilts/clang/host/linux-x86/Profiles/bolt-r522817.tar.xz"
+            rm "$PLATFORM/prebuilts/clang/host/linux-x86/profiles/pgo-r522817.tar.xz"
+            rm "$PLATFORM/prebuilts/clang/host/linux-x86/profiles/bolt-r522817.tar.xz"
 
-            wget https://github.com/epicmann24/kernel_manifest/raw/refs/heads/oneplus/sm8750/pgo.tar.xz -O "$PLATFORM/prebuilts/clang/host/linux-x86/pgo-$clangver.tar.xz"
-            wget https://github.com/epicmann24/kernel_manifest/raw/refs/heads/oneplus/sm8750/bolt.tar.xz -O "$PLATFORM/prebuilts/clang/host/linux-x86/bolt-$clangver.tar.xz"
+            wget https://github.com/epicmann24/kernel_manifest/raw/refs/heads/oneplus/sm8750/pgo.tar.xz -O "$PLATFORM/prebuilts/clang/host/linux-x86/profiles/pgo-$clangver.tar.xz"
+            wget https://github.com/epicmann24/kernel_manifest/raw/refs/heads/oneplus/sm8750/bolt.tar.xz -O "$PLATFORM/prebuilts/clang/host/linux-x86/profiles/bolt-$clangver.tar.xz"
           fi
 
           git clone https://gitlab.com/kei-space/clang/$clangver.git $PLATFORM/prebuilts/clang/host/linux-x86/clang-$clangver
