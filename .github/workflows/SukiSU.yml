@@ -193,8 +193,8 @@ jobs:
             clangver="r536225"
             
             # Use newer profiles
-            rm "$PLATFORM/prebuilts/clang/host/linux-x86/pgo-r510928.tar.xz"
-            rm "$PLATFORM/prebuilts/clang/host/linux-x86/bolt-r510928.tar.xz"
+            rm "$PLATFORM/prebuilts/clang/host/linux-x86/Profiles/pgo-r522817.tar.xz"
+            rm "$PLATFORM/prebuilts/clang/host/linux-x86/Profiles/bolt-r522817.tar.xz"
 
             wget https://github.com/epicmann24/kernel_manifest/raw/refs/heads/oneplus/sm8750/pgo.tar.xz -O "$PLATFORM/prebuilts/clang/host/linux-x86/pgo-$clangver.tar.xz"
             wget https://github.com/epicmann24/kernel_manifest/raw/refs/heads/oneplus/sm8750/bolt.tar.xz -O "$PLATFORM/prebuilts/clang/host/linux-x86/bolt-$clangver.tar.xz"
