@@ -108,6 +108,7 @@ jobs:
         run: |
           echo "Creating folder for configuration: $CONFIG..."
           cd "$CONFIG"
+          export PLATFORM="$CONFIG/kernel_platform"
           
           # Initialize and sync kernel source
           echo "Initializing and syncing kernel source..."
@@ -117,12 +118,24 @@ jobs:
           # Sync repo and apply patches
           $REPO --version
           $REPO --trace sync -c --no-clone-bundle --no-tags --optimized-fetch -j$(nproc --all) --fail-fast
+
+          clangver="r522817"
+          if [[ "${{ inputs.manifest }}" == "clo_oneplus_13t" ]]; then
+            clangver="r536225"
+
+            # Use newer profiles
+            rm "$PLATFORM/prebuilts/clang/host/linux-x86/profiles/pgo-r522817.tar.xz"
+            rm "$PLATFORM/prebuilts/clang/host/linux-x86/profiles/bolt-r522817.tar.xz"
+
+            wget https://github.com/epicmann24/kernel_manifest/raw/refs/heads/oneplus/sm8750/pgo.tar.xz -O "$PLATFORM/prebuilts/clang/host/linux-x86/profiles/pgo-$clangver.tar.xz"
+            wget https://github.com/epicmann24/kernel_manifest/raw/refs/heads/oneplus/sm8750/bolt.tar.xz -O "$PLATFORM/prebuilts/clang/host/linux-x86/profiles/bolt-$clangver.tar.xz"
+          fi
           
-          git clone https://gitlab.com/kei-space/clang/r536225.git $CONFIG/kernel_platform/prebuilts/clang/host/linux-x86/clang-r536225
+          git clone https://gitlab.com/kei-space/clang/$clangver.git $CONFIG/kernel_platform/prebuilts/clang/host/linux-x86/clang-$clangver
           
           rm -rf "$CONFIG/kernel_platform/prebuilts/clang/host/linux-x86/clang-r510928"
           
-          sed -i 's/r510928/r536225/g' "$CONFIG/kernel_platform/common/build.config.constants"
+          sed -i "s/r510928/$clangver/g" "$CONFIG/kernel_platform/common/build.config.constants"
 
           echo "DEFCONFIG=$CONFIG/kernel_platform/common/arch/arm64/configs/gki_defconfig" >> $GITHUB_ENV
       - name: Add KernelSU Next
