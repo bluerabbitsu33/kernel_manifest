@@ -444,7 +444,7 @@ jobs:
           echo "1st build"
             #./oplus/bazel/oplus_modules_variant.sh ${{ inputs.Chipset }} "$BUILD_TYPE" ""
             #./build_with_bazel.py -t ${{ inputs.Chipset }} $BUILD_TYPE "${BAZEL_ARGS[@]}" -o "$(pwd)/out"
-            #./tools/bazel run --config=fast --config=stamp --lto=thin --verbose_failures //common:kernel_aarch64_dist -- --dist_dir=dist
+            ./tools/bazel run --config=fast --config=stamp --lto=thin --verbose_failures //common:kernel_aarch64_dist -- --dist_dir=dist
           else
             echo "2nd build" #original
             LTO=thin ./oplus/build/oplus_build_kernel.sh ${{ inputs.Chipset }} "$BUILD_TYPE"
