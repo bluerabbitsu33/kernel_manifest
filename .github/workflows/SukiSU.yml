@@ -15,6 +15,7 @@ on:
         options:
           - oneplus_13t
           - clo_oneplus_13t
+          - test
         default: clo_oneplus_13t
 
       Chipset:
