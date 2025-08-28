@@ -51,15 +51,7 @@ on:
           - enable
           - disable
         default: enable
-
-      VFS_PATCH:
-        description: "启用 VFS 补丁（添加新钩子） // Enable VFS patch (add new hooks)"
-        required: true
-        type: choice
-        options:
-          - enable
-          - disable
-        default: enable
+        
       LTO:
         description: "Type of LTO optimisation to use"
         required: true
@@ -262,7 +254,7 @@ jobs:
           echo "隐藏应用补丁应用完成"
 
       - name: Apply New Hooks patches # 应用新的钩子补丁
-        if: ${{ startsWith(inputs.KSU_CONFIG, 'SukiSU') && inputs.VFS_PATCH == 'enable'}}
+        if: ${{ startsWith(inputs.KSU_CONFIG, 'SukiSU') }}
         run: |
           cd "$WORKSPACE"
           if [ ! -d SukiSU_patch ]; then
@@ -273,9 +265,7 @@ jobs:
           cp ./SukiSU_patch/hooks/syscall_hooks.patch "$COMMON/"
 
           cd "$COMMON"
-          echo "正在打 vfs 补丁..."
-          patch -p1 -F 3 < "syscall_hooks.patch" || { echo "应用 vfs 补丁失败"; exit 1; }
-          echo "vfs 补丁应用完成"
+          patch -p1 -F 3 < "syscall_hooks.patch" || { echo "应用 syscall_hooks 补丁失败"; exit 1; }
 
       - name: Configure kernel # 配置内核
         run: |
@@ -323,8 +313,8 @@ jobs:
           echo "正在更新KernelSU 内核配置..."
           echo "CONFIG_KSU=y" >> "$DEFCONFIG"
           echo "CONFIG_KPM=y" >> "$DEFCONFIG"
-          echo "CONFIG_KSU_SUSFS_SUS_SU=${{ inputs.VFS_PATCH == 'enable' && 'n' || 'y' }}" >> "$DEFCONFIG"
-          echo "CONFIG_KSU_MANUAL_HOOK=${{ inputs.VFS_PATCH == 'enable' && 'y' || 'n' }}" >> "$DEFCONFIG"
+          echo "CONFIG_KSU_SUSFS_SUS_SU=n >> "$DEFCONFIG"
+          echo "CONFIG_KSU_MANUAL_HOOK=y >> "$DEFCONFIG"
 
           # Wakelock Blocker
           echo "CONFIG_BOEFFLA_WL_BLOCKER=y" >> "$DEFCONFIG"
@@ -499,7 +489,6 @@ jobs:
           fi
 
       - name: Apply patch_linux and replace Image # 应用 patch_linux 并替换 Image
-        if: ${{ inputs.VFS_PATCH == 'enable' }}
         run: |
           cd "$WORKSPACE/image_output"
           curl -LO https://github.com/SukiSU-Ultra/SukiSU_KernelPatch_patch/releases/download/0.12.0/patch_linux
@@ -553,7 +542,6 @@ jobs:
             - KernelSU 类型: `${{ env.KSU_TYPE }}`
             - Branch 版本: `${{ env.KSUVER }}`
             - SUSFS 补丁: `${{ inputs.SUSFS }}`
-            - VFS 补丁: `${{ inputs.VFS_PATCH }}`
             - Kernel 版本: `${{ inputs.VERSION }}`
             - 构建时间: `${{ steps.formatted_date.outputs.formatted }}`
           files: |
