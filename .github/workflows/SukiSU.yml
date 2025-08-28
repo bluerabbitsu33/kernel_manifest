@@ -60,7 +60,6 @@ on:
           - enable
           - disable
         default: enable
-        
       LTO:
         description: "Type of LTO optimisation to use"
         required: true
