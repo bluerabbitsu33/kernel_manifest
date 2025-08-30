@@ -4,7 +4,7 @@
   <remote fetch="https://github.com/epicmann24" name="origin"/>
   <remote fetch="https://github.com/brokestar233" name="broke"/>
   <default remote="clo-la" revision="dummy_revision" sync-c="true" sync-tags="false"/>
-  <project remote="origin" name="android_kernel_common_oneplus_sm8750" path="kernel_platform/common" revision="70afb7880f36e223ff1dfeec22aa614ab74fb55a">
+  <project remote="origin" name="android_kernel_common_oneplus_sm8750" path="kernel_platform/common" revision="3df26056e1a62d45a0c91d3d35b26552bc065b34">
   <!--project remote="broke" name="android_kernel_common_oneplus_sm8750" path="kernel_platform/common" revision="v7"-->
     <linkfile dest="kernel_platform/.source_date_epoch_dir" src="."/>
   </project>
