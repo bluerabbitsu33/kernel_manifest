@@ -263,6 +263,7 @@ jobs:
           # Add KSU configuration settings
           echo "CONFIG_KSU=y" >> "$DEFCONFIG"
           echo "CONFIG_KSU_MANUAL_HOOK=y" >> "$DEFCONFIG"
+          echo "CONFIG_KSU_KPROBES_HOOK=n" >> "$DEFCONFIG"
           
           # Add SUSFS configuration settings
           echo "CONFIG_KSU_SUSFS=y" >> "$DEFCONFIG"
