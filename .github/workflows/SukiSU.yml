@@ -435,7 +435,7 @@ jobs:
               ./build_with_bazel.py -t ${{ inputs.Chipset }} $BUILD_TYPE "${BAZEL_ARGS[@]}" -o "$(pwd)/out"
             else
               cd common
-              sh drivers/of/overwriter/overwrite_configs/convert_configs.sh
+              bash drivers/of/overwriter/overwrite_configs/convert_configs.sh
               cd ..
               ./tools/bazel run --config=fast --config=stamp --lto=thin --verbose_failures //common:kernel_aarch64_dist -- --dist_dir=dist
             fi
