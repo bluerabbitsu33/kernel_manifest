@@ -131,7 +131,7 @@ jobs:
             wget https://github.com/epicmann24/kernel_manifest/raw/refs/heads/oneplus/sm8750/bolt.tar.xz -O "$PLATFORM/prebuilts/clang/host/linux-x86/profiles/bolt-$clangver.tar.xz"
           fi
 
-          echo "CONFIG_ORYON_COMPILER_FLAG=n" >> "$DEFCONFIG"
+          sed -i "s/KBUILD_CFLAGS += -mcpu=oryon-1/ /" "$COMMON/Makefile"
           
           git clone https://gitlab.com/kei-space/clang/$clangver.git $CONFIG/kernel_platform/prebuilts/clang/host/linux-x86/clang-$clangver
           
