@@ -209,7 +209,7 @@ jobs:
         run: |
           echo "KSU_TYPE=$(echo '${{ inputs.KSU_CONFIG }}' | cut -d'_' -f1)" >> $GITHUB_ENV
           if [[ "${{ inputs.KSU_CONFIG }}" == "SukiSU_dev" ]]; then
-            echo "SukiSU_BRANCH=susfs-main" >> $GITHUB_ENV
+            echo "SukiSU_BRANCH=susfs-test" >> $GITHUB_ENV
           elif [[ "${{ inputs.KSU_CONFIG }}" == "SukiSU_stable" ]]; then
             echo "SukiSU_BRANCH=susfs-stable" >> $GITHUB_ENV
           fi
